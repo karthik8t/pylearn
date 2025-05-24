@@ -20,7 +20,7 @@ const NavigationBar = (props: {login: boolean}) => {
                 <span><Link to={"/concepts"}>Concepts</Link></span>
                 {login ? (
                     <Link to={"/login"}>
-                        <Button variant={"default"}>Login</Button>
+                        <Button variant={"secondary"}>Login</Button>
                     </Link>
                 ) : (
                     <Link to={"/profile"}>
