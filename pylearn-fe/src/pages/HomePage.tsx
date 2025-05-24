@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from "../components/common/NavigationBar.tsx";
 import FooterCommon from "@/components/common/FooterCommon.tsx";
+import HeroContainer from "@/components/common/HeroContainer.tsx";
 
 function HomeHero() {
     const navigate = useNavigate();
@@ -29,10 +30,10 @@ function HomeHero() {
 const HomePage = () => {
     return (
         <div className={"h-screen flex flex-col justify-start"}>
-            <NavigationBar login={false}/>
-            <div className={"h-full max-h-[715px] my-8"}>
+            <NavigationBar/>
+            <HeroContainer>
                 <HomeHero/>
-            </div>
+            </HeroContainer>
             <div className={"mt-auto mx-auto pb-4"}>
                 <FooterCommon/>
             </div>

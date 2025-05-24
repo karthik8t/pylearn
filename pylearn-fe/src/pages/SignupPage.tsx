@@ -1,33 +1,27 @@
 import React from 'react'
-import NavigationBar from "../components/common/NavigationBar.tsx";
 import {useForm} from "react-hook-form";
-import {loginSchema, type LoginSchema} from "@/schemas/auth/login.schema.ts";
+import {signupSchema, type SignupSchema} from "@/schemas/auth/signup.schema.ts";
 import {zodResolver} from "@hookform/resolvers/zod";
+import NavigationBar from "@/components/common/NavigationBar.tsx";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {Link} from "react-router-dom";
 import HeroContainer from "@/components/common/HeroContainer.tsx";
-import {authService} from "@/services/api/auth.service.ts";
 
-const LoginPage = () => {
+const SignupPage = () => {
 
-    const form = useForm<LoginSchema>({
-        resolver: zodResolver(loginSchema),
+    const form = useForm<SignupSchema>({
+        resolver: zodResolver(signupSchema),
         defaultValues: {
             email: "",
+            username: "",
             password: ""
         }
     });
 
-    async function onSubmit(data: LoginSchema) {
+    function onSubmit(data: SignupSchema) {
         console.log(data);
-        try {
-            const loginResponse = await authService.login(data);
-            console.log(loginResponse);
-        } catch (exception: any) {
-            console.log(exception);
-        }
     }
 
     return (
@@ -35,7 +29,7 @@ const LoginPage = () => {
             <NavigationBar/>
             <HeroContainer>
                 <div>
-                    <h1 className={"text-3xl font-bold mb-12 text-center"}>Welcome Back</h1>
+                    <h1 className={"text-3xl font-bold mb-12 text-center"}>Sign up</h1>
                     <div className={"p-4"}>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className={"w-[480px] flex flex-col gap-4"}>
@@ -54,6 +48,19 @@ const LoginPage = () => {
                                 />
                                 <FormField
                                     control={form.control}
+                                    name="username"
+                                    render={({field}) => (
+                                        <FormItem className={""}>
+                                            <FormLabel className={"text-lg font-light"}>Username</FormLabel>
+                                            <FormControl>
+                                                <Input className={"h-12"} placeholder="username" {...field} />
+                                            </FormControl>
+                                            <FormMessage/>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
                                     name="password"
                                     render={({field}) => (
                                         <FormItem>
@@ -65,15 +72,14 @@ const LoginPage = () => {
                                         </FormItem>
                                     )}
                                 />
-                                <Button type="submit" className={"mt-4"}>Log in</Button>
+                                <Button type="submit" className={"mt-4"}>Sign Up</Button>
                             </form>
                         </Form>
                     </div>
                     <div className={"flex flex-col items-center gap-4 mt-12 text-sm"}>
-                        <span className={"text-primary"}>Forgot password?</span>
                         <span>
-                        <Link to={"/signup"}>
-                            <span className={"text-primary"}>Don't have an account? Sign up</span>
+                        <Link to={"/login"}>
+                            <span className={"text-primary"}>Already have an account? Login up</span>
                         </Link>
                     </span>
                     </div>
@@ -82,4 +88,4 @@ const LoginPage = () => {
         </div>
     )
 }
-export default LoginPage
+export default SignupPage
