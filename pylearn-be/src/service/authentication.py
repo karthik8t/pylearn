@@ -18,7 +18,7 @@ def create_new_user(signup_form: SignUpDto) -> UserDto:
 def validate_user_credentials(login_dto: LoginDto) -> UserDto:
     _user = user_collection.find_one({'email': login_dto.email, 'password': login_dto.password})
     if _user:
-        return UserDto(_user.get('username'), _user.get('password'))
+        return UserDto(_user.get('username'), _user.get('email'))
     else:
         # TODO raise exception and handle it
         return UserDto('', '')
