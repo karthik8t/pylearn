@@ -5,9 +5,8 @@ import type {LoginSchema} from "@/schemas/auth/login.schema.ts";
 export const authService = {
     async login(loginForm: LoginSchema) {
         try {
-            const requestBody = JSON.stringify(loginForm)
             //TODO: parse the response user schema
-            return await apiClient.post("/login", requestBody);
+            return await apiClient.post("/login", loginForm);
         } catch (error) {
             // Convert to standardized error format
             return Promise.reject({
@@ -18,8 +17,7 @@ export const authService = {
     },
     async signup(signupForm: SignupSchema){
         try {
-            const requestBody = JSON.stringify(signupForm)
-            return await apiClient.post("/signup", requestBody);
+            return await apiClient.post("/signup", signupForm);
         } catch (error) {
             // Convert to standardized error format
             return Promise.reject({

@@ -8,6 +8,7 @@ import {Input} from "@/components/ui/input.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {Link} from "react-router-dom";
 import HeroContainer from "@/components/common/HeroContainer.tsx";
+import {authService} from "@/services/api/auth.service.ts";
 
 const SignupPage = () => {
 
@@ -20,8 +21,14 @@ const SignupPage = () => {
         }
     });
 
-    function onSubmit(data: SignupSchema) {
+    async function onSubmit(data: SignupSchema) {
         console.log(data);
+        try {
+            const signupResponse = await authService.signup(data);
+            console.log(signupResponse);
+        } catch (exception: any) {
+            console.log(exception);
+        }
     }
 
     return (
