@@ -1,7 +1,7 @@
 import React from 'react'
 import pythonLogo from 'resources/public/python-logo.svg'
 import avatarLogo from 'resources/public/avatar-logo.svg'
-import {NavLink, useLocation} from "react-router-dom";
+import {NavLink, Outlet, useLocation} from "react-router-dom";
 import {Button} from "renderer/components/ui/button";
 
 
@@ -9,7 +9,8 @@ const Navigation = () => {
     const page = useLocation().pathname;
 
     return (
-        <div className={"w-full h-[65px] flex items-center justify-between p-4 px-10 border-b-1"}>
+      <main>
+        <nav className={"w-full h-[65px] flex items-center justify-between p-4 px-10 border-b-1"}>
             <div className={"flex items-center justify-start gap-4"}>
                 <img src={pythonLogo} height={16} width={16} alt="Python logo" /> <span>pyLearn</span>
             </div>
@@ -33,7 +34,11 @@ const Navigation = () => {
                     </NavLink>
                 )}
             </div>
-        </div>
+        </nav>
+        <section>
+          <Outlet />
+        </section>
+      </main>
     )
 }
 export default Navigation

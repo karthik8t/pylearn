@@ -3,7 +3,6 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Link} from "react-router-dom";
 import {signupSchema, SignupSchema} from 'shared/types';
-import Navigation from "renderer/components/common/navigation";
 import HeroContainer from "renderer/components/common/hero-container";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "renderer/components/ui/form";
 import {Input} from "renderer/components/ui/input";
@@ -14,19 +13,19 @@ const Signup = () => {
     const form = useForm<SignupSchema>({
         resolver: zodResolver(signupSchema),
         defaultValues: {
-            email: "",
-            username: "",
-            password: ""
+            email: "test@email.com",
+            username: "ola",
+            password: "Test@123"
         }
     });
 
     function onSubmit(data: SignupSchema) {
         console.log(data);
+        window.App.registerUser(data)
     }
 
     return (
         <div className={"h-screen"}>
-            <Navigation/>
             <HeroContainer>
                 <div>
                     <h1 className={"text-3xl font-bold mb-12 text-center"}>Sign up</h1>

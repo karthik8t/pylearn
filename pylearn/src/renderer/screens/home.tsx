@@ -29,8 +29,8 @@ function HomeHero() {
 
 const Home = () => {
     return (
-        <div className={"h-screen flex flex-col justify-start"}>
-            <Navigation/>
+        <div className={"h-full flex flex-col justify-start"}>
+            {/*<Navigation/>*/}
             <HeroContainer>
                 <HomeHero/>
             </HeroContainer>
