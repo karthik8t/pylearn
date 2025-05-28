@@ -1,13 +1,13 @@
 {
-  "displayName": "My Electron App",
-  "name": "my-electron-app",
-  "description": "Your awesome app description",
+  "displayName": "PyLearn",
+  "name": "pylearn-electron-app",
+  "description": "Awesome way to learn Python concepts",
   "version": "0.0.0",
   "main": "./node_modules/.dev/main/index.js",
   "resources": "src/resources",
   "author": {
-    "name": "Dalton Menezes",
-    "email": "daltonmenezes@outlook.com"
+    "name": "ola",
+    "email": "test@email.com"
   },
   "license": "MIT",
   "packageManager": "pnpm@10.0.0",
@@ -31,15 +31,20 @@
     "lint:fix": "biome lint --write --no-errors-on-unmatched"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
+    "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-slot": "^1.2.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "electron-router-dom": "^2.1.0",
     "lucide-react": "^0.477.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.56.4",
     "react-router-dom": "^7.2.0",
     "tailwind-merge": "^3.0.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.25.32"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
