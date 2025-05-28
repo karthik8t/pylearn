@@ -1,9 +1,8 @@
 import React from 'react'
-import {Link, NavLink} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {loginSchema, LoginSchema} from 'shared/types';
 import {zodResolver} from "@hookform/resolvers/zod";
-import Navigation from "renderer/components/common/navigation";
 import HeroContainer from "renderer/components/common/hero-container";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "renderer/components/ui/form";
 import {Input} from "renderer/components/ui/input";
@@ -26,7 +25,6 @@ const Login = () => {
 
     return (
         <div className={"h-screen"}>
-            <Navigation/>
             <HeroContainer>
                 <div>
                     <h1 className={"text-3xl font-bold mb-12 text-center"}>Welcome Back</h1>
