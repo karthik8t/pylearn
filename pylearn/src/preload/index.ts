@@ -15,6 +15,9 @@ const API = {
   loginUser: async (loginForm: LoginSchema): Promise<UserSchema|undefined> => {
     return await ipcRenderer.invoke('loginUser', loginForm)
   },
+  getConcepts: async () => {
+    return await ipcRenderer.invoke('getConcepts')
+  },
   username: process.env.USER,
 }
 

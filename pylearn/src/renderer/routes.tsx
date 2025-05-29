@@ -6,6 +6,7 @@ import Login from "renderer/screens/login";
 import Signup from "renderer/screens/signup";
 import Navigation from "renderer/components/common/navigation";
 import Dashboard from "renderer/screens/dashboard";
+import Concepts from "renderer/screens/concepts";
 
 export function AppRoutes() {
   return <Router
@@ -16,7 +17,7 @@ export function AppRoutes() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/dashboard" element={<Dashboard/>}/>
-        <Route path="/concepts" element={<Dashboard/>}/>
+        <Route path="/concepts" element={<Concepts/>}/>
       </Route>
     }
   />

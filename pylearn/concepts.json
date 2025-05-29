@@ -1,0 +1,42 @@
+[
+  {
+    "id": "concept-1",
+    "name": "Mathematics",
+    "description": "The study of numbers, quantities, and shapes.",
+    "image": "math.png",
+    "sub_concepts": [
+      {
+        "id": "sub-1",
+        "name": "Algebra",
+        "description": "The study of mathematical symbols and rules.",
+        "image": "algebra.png"
+      },
+      {
+        "id": "sub-2",
+        "name": "Geometry",
+        "description": "The study of shapes and their properties.",
+        "image": "geometry.png"
+      }
+    ]
+  },
+  {
+    "id": "concept-2",
+    "name": "Physics",
+    "description": "The study of matter, energy, and their interactions.",
+    "image": "physics.png",
+    "sub_concepts": [
+      {
+        "id": "sub-3",
+        "name": "Mechanics",
+        "description": "The study of motion and forces.",
+        "image": "mechanics.png"
+      },
+      {
+        "id": "sub-4",
+        "name": "Optics",
+        "description": "The study of light.",
+        "image": "optics.png"
+      }
+    ]
+  }
+]
