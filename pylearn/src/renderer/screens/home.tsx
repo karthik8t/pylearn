@@ -9,7 +9,8 @@ function HomeHero() {
     const heroTitle = "Master Python the smart way - with AI";
     const heroMessage = "Learn Python concepts with visual memory hooks, track your progress in real-time, and embark on an interactive learning journey.";
     return <div
-        className={`h-full w-full max-w-[1200px] mx-auto bg-home-image bg-center rounded-3xl p-10 flex flex-col items-center justify-center`}>
+        className={`h-[500px] w-[900px] mx-auto bg-center rounded-3xl p-10 flex flex-col items-center justify-center`}
+        style={{backgroundImage: `url(app://src/resources/public/homepage-bg.jpg)`}}>
         <div>
             <h1 className={"text-6xl font-bold text-secondary"}>
                 {heroTitle}
