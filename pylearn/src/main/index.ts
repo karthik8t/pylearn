@@ -1,34 +1,43 @@
-import {app, ipcMain} from 'electron'
+import {app, ipcMain, protocol} from 'electron'
 
 import {makeAppWithSingleInstanceLock} from 'lib/electron-app/factories/app/instance'
 import {makeAppSetup} from 'lib/electron-app/factories/app/setup'
 import {MainWindow} from './windows/main'
 import {getConcepts, loginUser, signupUser} from "lib/services/user-service";
+import * as path from "node:path";
+import * as fs from "node:fs";
+import getMimeType from "lib/electron-app/utils/util";
+
+const protocolName = "img";
+protocol.registerSchemesAsPrivileged([
+  {scheme: protocolName, privileges: {bypassCSP: true}},
+]);
 
 makeAppWithSingleInstanceLock(async () => {
   await app.whenReady()
+
+  protocol.handle('app', (request) => {
+    const filePath = request.url.slice('app://'.length);
+    const absolutePath = path.join(app.getAppPath(), filePath);
+    return new Response(fs.createReadStream(absolutePath), {
+      headers: {'Content-Type': getMimeType(absolutePath)} // Adjust content type as needed
+    });
+  });
+
   await makeAppSetup(MainWindow)
 })
 
 // Handle signup data from renderer
 ipcMain.on('signupUser', (_event, signupData) => {
-  console.log('Signup data received in main:', signupData)
   const response = signupUser(signupData)
-  console.log('Signup response in main:', response)
 })
 
 ipcMain.handle('loginUser', async (_event, loginData) => {
-  console.log('Login data received in main:', loginData)
   const response = await loginUser(loginData)
-  console.log('Login response in main:', response)
   return Promise.resolve(response)
 })
 
 ipcMain.handle('getConcepts', async (_event, _data) => {
-  console.log('Get concepts in main')
   const response = await getConcepts()
-  console.log('Get concepts response in main:', response)
   return Promise.resolve(response)
 })
-
-
