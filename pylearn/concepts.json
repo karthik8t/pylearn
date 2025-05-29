@@ -3,7 +3,7 @@
     "id": "concept-1",
     "name": "Mathematics",
     "description": "The study of numbers, quantities, and shapes.",
-    "image": "math.png",
+    "image": "concepts/math/cover.png",
     "sub_concepts": [
       {
         "id": "sub-1",
@@ -23,7 +23,7 @@
     "id": "concept-2",
     "name": "Physics",
     "description": "The study of matter, energy, and their interactions.",
-    "image": "physics.png",
+    "image": "concepts/physics/cover.png",
     "sub_concepts": [
       {
         "id": "sub-3",

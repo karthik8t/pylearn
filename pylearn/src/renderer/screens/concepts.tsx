@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {ConceptSchema} from "shared/types";
 import {ScrollArea} from "renderer/components/ui/scroll-area";
 import {Button} from "renderer/components/ui/button";
-import {ToggleGroup, ToggleGroupItem} from "renderer/components/ui/toggle-group";
+import {Card, CardContent, CardFooter} from "renderer/components/ui/card";
 
 type ConceptType = 'Beginner' | 'Intermediate' | 'Advanced' | 'All' | 'Unlearned' | 'Bookmarks'
 const conceptTypes: ConceptType[] = ['Beginner', 'Intermediate', 'Advanced', 'All', 'Unlearned', 'Bookmarks']
@@ -41,28 +41,21 @@ const Concepts = () => {
               })
             }
           </div>
-        </div>
-        <div>
-          <ToggleGroup type="multiple" defaultValue={["bold"]} variant={"outline"}>
-            {
-              conceptTypes.map((type: ConceptType, index: number) => {
-                return (
-                  <ToggleGroupItem value={type} aria-label={`Toggle ${conceptType}`}>
-                    {type}
-                  </ToggleGroupItem>
-                )
-              })
-            }
-            {/*<ToggleGroupItem value="bold" aria-label="Toggle bold">*/}
-            {/*  <Bold className="h-4 w-4"/>*/}
-            {/*</ToggleGroupItem>*/}
-            {/*<ToggleGroupItem value="italic" aria-label="Toggle italic">*/}
-            {/*  <Italic className="h-4 w-4"/>*/}
-            {/*</ToggleGroupItem>*/}
-            {/*<ToggleGroupItem value="strikethrough" aria-label="Toggle strikethrough">*/}
-            {/*  <Underline className="h-4 w-4"/>*/}
-            {/*</ToggleGroupItem>*/}
-          </ToggleGroup>
+          {
+            concepts.map(concept => {
+              return (
+                <Card key={concept.id} className={"flex flex-row"}>
+                  <CardContent>
+                    <h1>{concept.name}</h1>
+                    <p>{concept.description}</p>
+                  </CardContent>
+                  <CardFooter className={"ml-auto"}>
+                    <img src={`app://src/resources/assets/${concept.image}`} alt={concept.name} />
+                  </CardFooter>
+                </Card>
+              )
+            })
+          }
         </div>
       </ScrollArea>
     </div>

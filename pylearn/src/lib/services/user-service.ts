@@ -36,7 +36,6 @@ export const loginUser = async (loginForm: LoginSchema) => {
   await db.read();
   db.data = db.data || [];
 
-  console.log('Database loaded:', db.data);
   const userList: UserListSchema = db.data
   const user: UserSchema | undefined = userList.find(user => user.email === loginForm.email && user.password === loginForm.password)
   return user;
@@ -51,6 +50,5 @@ export const getConcepts = async () => {
   const db = new Low<ConceptSchema[]>(adapter, defaultData);
   await db.read();
   db.data = db.data || [];
-  console.log('Concepts loaded:', db.data);
   return db.data;
 }
