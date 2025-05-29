@@ -9,13 +9,13 @@ export async function MainWindow() {
   const window = createWindow({
     id: 'main',
     title: displayName,
-    width: 700,
-    height: 473,
+    width: 1200,
+    height: 800,
     show: false,
     center: true,
     movable: true,
-    resizable: false,
-    alwaysOnTop: true,
+    resizable: true,
+    alwaysOnTop: false,
     autoHideMenuBar: true,
 
     webPreferences: {
