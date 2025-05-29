@@ -9,7 +9,7 @@ const Navigation = () => {
     const page = useLocation().pathname;
 
     return (
-      <main className={"h-screen w-full flex flex-col"}>
+      <main className={"h-screen w-full"}>
         <nav className={"w-full h-[65px] flex items-center justify-between p-4 px-10 border-b-1"}>
             <div className={"flex items-center justify-start gap-4"}>
                 <img src={pythonLogo} height={16} width={16} alt="Python logo" /> <span>pyLearn</span>
@@ -35,7 +35,7 @@ const Navigation = () => {
                 )}
             </div>
         </nav>
-        <section className={"w-full h-full"}>
+        <section className={"w-full  h-[calc(100vh-65px)]"}>
           <Outlet />
         </section>
       </main>
