@@ -29,7 +29,6 @@ const Login = () => {
   }
 
   return (
-    <div className={"h-screen"}>
       <HeroContainer>
         <div>
           <h1 className={"text-3xl font-bold mb-12 text-center"}>Welcome Back</h1>
@@ -76,7 +75,6 @@ const Login = () => {
           </div>
         </div>
       </HeroContainer>
-    </div>
   )
 }
 export default Login

@@ -10,6 +10,7 @@ const conceptTypes: ConceptType[] = ['Beginner', 'Intermediate', 'Advanced', 'Al
 const Concepts = () => {
   const [concepts, setConcepts] = useState<ConceptSchema[]>([])
   const [conceptType, setConceptType] = useState<ConceptType>('All')
+  const [expandedConcept, setExpandedConcept] = useState<ConceptSchema | undefined>(undefined)
 
   useEffect(() => {
     const invokeConceptsChannel = async () => {
@@ -21,9 +22,9 @@ const Concepts = () => {
   }, []);
 
   return (
-    <div className={"h-screen"}>
-      <ScrollArea className={"h-full w-full max-w-[700px] p-4 mx-auto"}>
-        <div className={"flex flex-col gap-4"}>
+    <div className={"h-full"}>
+      <ScrollArea className={"h-full w-full max-w-[900px] mx-auto"}>
+        <div className={"flex flex-col gap-8"}>
           <h1 className={"text-3xl font-bold"}>Explore Python Concepts</h1>
           <div className={"flex gap-4"}>
             {
@@ -44,15 +45,32 @@ const Concepts = () => {
           {
             concepts.map(concept => {
               return (
-                <Card key={concept.id} className={"flex flex-row"}>
-                  <CardContent>
-                    <h1>{concept.name}</h1>
-                    <p>{concept.description}</p>
-                  </CardContent>
-                  <CardFooter className={"ml-auto"}>
-                    <img src={`app://src/resources/assets/${concept.image}`} alt={concept.name} />
-                  </CardFooter>
-                </Card>
+                <div>
+                  <Card key={concept.id}
+                        className={"flex flex-row h-[250px] border-1 border-gray-200 rounded-3xl shadow-none"}>
+                    <CardContent>
+                      <h1 className={"font-bold"}>{concept.name}</h1>
+                      <p className={"text-gray-500 mb-6"}>{concept.description}</p>
+                      {
+                        (expandedConcept && expandedConcept.id === concept.id) ? (
+                          <Button onClick={() => setExpandedConcept(undefined)}>Collapse</Button>
+                        ) : (
+                          <Button onClick={() => setExpandedConcept(concept)}>Expand</Button>
+                        )
+                      }
+                    </CardContent>
+                    <CardFooter className={"ml-auto"}>
+                      <div className={`w-[300px] h-full bg-center bg-cover bg-no-repeat rounded-3xl`}
+                           style={{"backgroundImage": `url(app://src/resources/assets/${concept.image})`}}>
+                      </div>
+                    </CardFooter>
+                  </Card>
+                  <div>
+                    {
+                      expandedConcept && expandedConcept.id === concept.id && (<p>hello</p>)
+                    }
+                  </div>
+                </div>
               )
             })
           }

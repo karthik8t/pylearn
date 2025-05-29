@@ -25,7 +25,7 @@ const Signup = () => {
     }
 
     return (
-        <div className={"h-screen"}>
+        <div className={"h-full"}>
             <HeroContainer>
                 <div>
                     <h1 className={"text-3xl font-bold mb-12 text-center"}>Sign up</h1>
