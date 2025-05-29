@@ -1,8 +1,9 @@
-import { app, ipcMain } from 'electron'
+import {app, ipcMain} from 'electron'
 
-import { makeAppWithSingleInstanceLock } from 'lib/electron-app/factories/app/instance'
-import { makeAppSetup } from 'lib/electron-app/factories/app/setup'
-import { MainWindow } from './windows/main'
+import {makeAppWithSingleInstanceLock} from 'lib/electron-app/factories/app/instance'
+import {makeAppSetup} from 'lib/electron-app/factories/app/setup'
+import {MainWindow} from './windows/main'
+import {signupUser} from "lib/services/user-service";
 
 makeAppWithSingleInstanceLock(async () => {
   await app.whenReady()
@@ -10,6 +11,8 @@ makeAppWithSingleInstanceLock(async () => {
 })
 
 // Handle signup data from renderer
-ipcMain.on('signup:submit', (_event, signupData) => {
+ipcMain.on('signupUser', (_event, signupData) => {
   console.log('Signup data received in main:', signupData)
+  const response = signupUser(signupData)
+  console.log('Signup response in main:', response)
 })

@@ -11,7 +11,7 @@ const API = {
   sayHelloFromBridge: () => console.log('\nHello from bridgeAPI! 👋\n\n'),
   registerUser: (signupForm: SignupSchema) => {
     // Send signup data to main process
-    ipcRenderer.send('signup:submit', signupForm)
+    ipcRenderer.send('signupUser', signupForm)
   },
   username: process.env.USER,
 }
