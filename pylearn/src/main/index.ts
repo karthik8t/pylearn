@@ -3,7 +3,7 @@ import {app, ipcMain} from 'electron'
 import {makeAppWithSingleInstanceLock} from 'lib/electron-app/factories/app/instance'
 import {makeAppSetup} from 'lib/electron-app/factories/app/setup'
 import {MainWindow} from './windows/main'
-import {signupUser} from "lib/services/user-service";
+import {loginUser, signupUser} from "lib/services/user-service";
 
 makeAppWithSingleInstanceLock(async () => {
   await app.whenReady()
@@ -16,3 +16,12 @@ ipcMain.on('signupUser', (_event, signupData) => {
   const response = signupUser(signupData)
   console.log('Signup response in main:', response)
 })
+
+ipcMain.handle('loginUser', async (_event, loginData) => {
+  console.log('Login data received in main:', loginData)
+  const response = await loginUser(loginData)
+  console.log('Login response in main:', response)
+  return Promise.resolve(response)
+})
+
+

@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import { SignupSchema } from 'shared/types'
+import {LoginSchema, SignupSchema, UserSchema} from 'shared/types'
 
 declare global {
   interface Window {
@@ -10,8 +10,10 @@ declare global {
 const API = {
   sayHelloFromBridge: () => console.log('\nHello from bridgeAPI! 👋\n\n'),
   registerUser: (signupForm: SignupSchema) => {
-    // Send signup data to main process
     ipcRenderer.send('signupUser', signupForm)
+  },
+  loginUser: async (loginForm: LoginSchema): Promise<UserSchema|undefined> => {
+    return await ipcRenderer.invoke('loginUser', loginForm)
   },
   username: process.env.USER,
 }
