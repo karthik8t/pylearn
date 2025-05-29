@@ -32,3 +32,15 @@ export const signupSchema = z.object({
 })
 
 export type SignupSchema = z.infer<typeof signupSchema>
+
+
+export const userSchema = z.object({
+  username: z.string(),
+  email: z.string().email(),
+  password: z.string().min(6),
+})
+
+export type UserSchema = z.infer<typeof userSchema>
+
+export const userListSchema = z.array(userSchema)
+export type UserListSchema = z.infer<typeof userListSchema>
