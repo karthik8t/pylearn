@@ -1,5 +1,6 @@
 [
   {
+    "id": "concept1",
     "name": "Dictionary Views (keys, values, items)",
     "shortDescription": "Dictionary view objects provide dynamic, lightweight access to a dictionary's keys, values, or key-value pairs.",
     "description": "Dictionary views are dynamic collections that offer a window into a dictionary's contents without creating a separate copy of the data. The `dict.keys()` method returns a view of all keys, `dict.values()` returns a view of all values, and `dict.items()` returns a view of all key-value pairs as tuples. A key characteristic of these views is their 'live' nature: they reflect any changes made to the underlying dictionary immediately. This makes them highly memory-efficient, especially for large dictionaries, as they don't duplicate the data. These view objects also support set-like operations (for `keys()` and `items()`) such as union, intersection, and difference, making them powerful for comparing dictionary structures.",
@@ -11,6 +12,7 @@
     ],
     "sub_concepts": [
       {
+        "id": "sub_concept11",
         "name": "Dictionary Keys View",
         "shortDescription": "The `dict.keys()` method provides a dynamic view of all keys in a dictionary.",
         "description": "The `dict.keys()` method returns a **dictionary view object** that displays a list of all the keys in the dictionary. This view is 'live,' meaning if the dictionary changes (e.g., a new key-value pair is added or an existing one is deleted), the `keys()` view will automatically reflect these changes without needing to be re-called. It behaves like a set for most operations, allowing for efficient membership testing (`key in dict_view`) and set-like operations like union, intersection, and difference with other key views or sets. This makes it efficient for iterating over keys or performing set-based comparisons.",
@@ -22,6 +24,7 @@
         ]
       },
       {
+        "id": "sub_concept12",
         "name": "Dictionary Values View",
         "shortDescription": "The `dict.values()` method returns a dynamic view of all values in a dictionary.",
         "description": "The `dict.values()` method provides a **dictionary view object** that shows all the values currently in the dictionary. Similar to the keys view, this view is dynamic and will update automatically as the underlying dictionary is modified. Unlike `keys()` views, `values()` views do not necessarily contain unique elements and do not support set-like operations, as values can be duplicated. They are primarily used for iterating over the values or checking for value membership, offering a memory-efficient way to access all data values without creating a duplicate list.",
@@ -33,6 +36,7 @@
         ]
       },
       {
+        "id": "sub_concept13",
         "name": "Dictionary Items View",
         "shortDescription": "The `dict.items()` method offers a dynamic view of key-value pairs as tuples.",
         "description": "The `dict.items()` method returns a **dictionary view object** that displays each key-value pair as a tuple (key, value). This view is also dynamic and will reflect any additions, deletions, or modifications to the original dictionary. The `items()` view supports efficient iteration over both keys and values simultaneously, making it ideal for loops that need to access both components of each entry. Like the `keys()` view, it supports set-like operations (union, intersection, difference) due to the uniqueness of key-value tuples, which can be highly useful for comparing the exact contents of dictionaries.",
@@ -46,6 +50,7 @@
     ]
   },
   {
+    "id": "concept2",
     "name": "Collection Inspection and Modification",
     "shortDescription": "This covers fundamental operations for querying and modifying common Python collections like lists, dictionaries, sets, and strings.",
     "description": "Python provides a rich set of built-in functions and methods for interacting with its core collection data types. These operations allow developers to determine the size of a collection, count element occurrences, find element positions, and dynamically add or remove elements. Understanding these fundamental operations is crucial for efficient data management and manipulation. Many of these functions and methods offer efficient implementations, typically with average O(1) or O(n) time complexity, depending on the operation and underlying data structure. Proper use of these built-in tools contributes to writing concise, readable, and performant Python code.",
@@ -57,6 +62,7 @@
     ],
     "sub_concepts": [
       {
+        "id": "sub_concept21",
         "name": "Determining Collection Size (len)",
         "shortDescription": "The `len()` built-in function returns the number of items in a collection.",
         "description": "The **`len()`** built-in function is used to get the number of items (length) of an object. It works universally across various sequence and collection types, including **lists**, **tuples**, **dictionaries**, **sets**, and **strings**. For sequences like lists and strings, it returns the number of elements. For dictionaries and sets, it returns the number of key-value pairs or unique elements, respectively. This operation is generally very efficient, often O(1), as many collection types store their size internally.",
@@ -70,6 +76,7 @@
         ]
       },
       {
+        "id": "sub_concept22",
         "name": "Counting Element Occurrences (count and in operator)",
         "shortDescription": "Methods like `count()` and the `in` operator are used to check for element presence or frequency.",
         "description": "To determine how many times a specific element appears in a **list** or **string**, the **`.count()`** method is employed. It iterates through the collection and returns the number of non-overlapping occurrences of the specified element. For simply checking if an element exists within a collection, the **`in` operator** (e.g., `if <el> in <collection>:`) is highly efficient and Pythonic. The `in` operator works across **lists**, **tuples**, **sets**, **dictionaries** (checking keys), and **strings**. While `count()` iterates through the entire collection (O(n)), the `in` operator can be O(1) for sets and dictionaries on average due to their hash-based nature, offering a significant performance advantage for membership testing.",
@@ -83,6 +90,7 @@
         ]
       },
       {
+        "id": "sub_concept23",
         "name": "Finding Element Index (index)",
         "shortDescription": "The `index()` method returns the first occurrence of an element in a list or string.",
         "description": "The **`.index()`** method is available for **lists** and **strings** to find the position (index) of the first occurrence of a specified element. It returns an integer representing the zero-based index of the element. If the element is not found within the collection, a **`ValueError`** is raised. Developers should use this method when the position of an element is needed and should typically wrap calls in a `try-except` block or precede with an `in` check if the element's presence is uncertain, to prevent runtime errors.",
@@ -95,6 +103,7 @@
         ]
       },
       {
+        "id": "sub_concept24",
         "name": "Removing Elements (pop, remove, clear)",
         "shortDescription": "Various methods are used to remove elements from mutable collections, either by index, value, or entirely.",
         "description": "Mutable collections like **lists**, **dictionaries**, and **sets** provide methods for removing elements. The **`.pop()`** method for lists removes and returns an item, by default the last one, or by a specified index. For dictionaries, `pop()` removes and returns a key-value pair. The **`.remove()`** method for lists and sets removes the first occurrence of a specified *value*. If the value is not found, `remove()` raises a **`ValueError`**. Finally, the **`.clear()`** method efficiently removes all items from a **list**, **dictionary**, or **set**, leaving the collection empty. Each method serves a specific removal use case, impacting the collection in-place.",
@@ -108,6 +117,7 @@
         ]
       },
       {
+        "id": "sub_concept25",
         "name": "Inserting Elements (insert)",
         "shortDescription": "The `insert()` method adds an element to a list at a specific index.",
         "description": "The **`.insert(index, element)`** method is a **list**-specific operation used to add an element at a specified position. Unlike `append()`, which adds to the end, `insert()` places the `element` at the given `index`, shifting all subsequent elements to the right. This means that inserting at index `0` will add the element to the beginning of the list. While flexible, frequent insertions at the beginning or middle of large lists can be less performant (O(n)) compared to `append()` due to the need to shift existing elements in memory.",
@@ -122,6 +132,7 @@
     ]
   },
   {
+    "id": "concept3",
     "name": "Date and Time Objects (datetime module)",
     "shortDescription": "The `datetime` module provides classes for working with dates, times, datetimes, and time differences in Python.",
     "description": "Python's built-in **`datetime` module** offers powerful and flexible classes for managing date and time information. This module allows you to represent specific points in time (date and datetime objects), durations (timedelta objects), and just time-of-day information (time objects). These classes handle complexities like leap years and timezone information, providing robust tools for applications requiring precise temporal calculations. The module is part of Python's standard library, making it readily available for all projects without external dependencies. Using these structured objects promotes readability and reduces errors compared to manually handling date/time components.",
@@ -133,6 +144,7 @@
     ],
     "sub_concepts": [
       {
+        "id": "sub_concept31",
         "name": "Date Objects (date)",
         "shortDescription": "A **`date`** object represents a calendar date (year, month, day) without time information.",
         "description": "The **`date` class** from the **`datetime` module** represents a calendar date. You create a `date` object by providing the `year`, `month`, and `day` as arguments, for example, `date(2023, 1, 15)`. These objects support valid dates from year 1 to 9999 AD. `date` objects are immutable, meaning their values cannot be changed after creation. They are useful for storing and manipulating date-only information, such as birthdays or significant calendar events. You can perform arithmetic operations with `timedelta` objects to add or subtract days, weeks, etc.",
@@ -144,6 +156,7 @@
         ]
       },
       {
+        "id": "sub_concept32",
         "name": "Time Objects (time)",
         "shortDescription": "A **`time`** object represents a specific time of day (hour, minute, second) without date information.",
         "description": "The **`time` class** within the **`datetime` module** focuses solely on time of day. You instantiate a `time` object by providing `hour`, `minute`, and `second` as keyword arguments, like `time(hour=9, minute=30, second=0)`. Optional arguments include `microsecond`, `tzinfo` (timezone information), and `fold`. Like `date` objects, `time` objects are immutable. They are ideal for representing recurring times, such as meeting schedules or alarm times, independent of a specific calendar date. Operations directly on `time` objects are limited, but they can be combined with `date` objects to form `datetime` objects.",
@@ -155,6 +168,7 @@
         ]
       },
       {
+        "id": "sub_concept33",
         "name": "Datetime Objects (datetime)",
         "shortDescription": "A **`datetime`** object combines both date and time information into a single entity.",
         "description": "The **`datetime` class** from the **`datetime` module** is the most comprehensive, representing a specific point in time that includes both date (year, month, day) and time (hour, minute, second, microsecond) components. It is created by providing all necessary components, for example, `datetime(2023, 10, 26, 15, 30, 0)`. `datetime` objects also support optional `tzinfo` and `fold` arguments for timezone handling. They are immutable and are widely used for timestamping events, scheduling, and performing complex temporal calculations, including comparisons and arithmetic with `timedelta` objects.",
@@ -166,6 +180,7 @@
         ]
       },
       {
+        "id": "sub_concept34",
         "name": "Timedelta Objects (timedelta)",
         "shortDescription": "A **`timedelta`** object represents a duration or difference between two `date` or `datetime` objects.",
         "description": "The **`timedelta` class** from the **`datetime` module** represents a duration, which is a difference between two dates, times, or datetimes. You create `timedelta` objects by specifying units like `weeks`, `days`, `hours`, `minutes`, `seconds`, or `microseconds`. For instance, `timedelta(days=7)` represents one week. These objects are primarily used to perform arithmetic operations with `date` and `datetime` objects, allowing you to easily add or subtract periods of time. They are crucial for calculations involving time differences, such as calculating elapsed time or predicting future dates.",
