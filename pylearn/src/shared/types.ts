@@ -44,3 +44,20 @@ export type UserSchema = z.infer<typeof userSchema>
 
 export const userListSchema = z.array(userSchema)
 export type UserListSchema = z.infer<typeof userListSchema>
+
+export const subConceptSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  image: z.string(),
+})
+export type SubConceptSchema = z.infer<typeof subConceptSchema>
+
+export const conceptSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  image: z.string(),
+  sub_concepts: z.array(subConceptSchema),
+})
+export type ConceptSchema = z.infer<typeof conceptSchema>
