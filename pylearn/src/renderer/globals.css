@@ -131,3 +131,19 @@
     -webkit-font-smoothing: antialiased;
   }
 }
+
+.heroHeading {
+  @apply text-4xl;
+  @apply font-bold;
+  @apply mb-4;
+}
+
+.heroSubHeading {
+  @apply text-2xl;
+  @apply font-bold;
+  @apply mb-4;
+}
+
+.mnemonicContainer > *{
+  /*@apply blur-sm*/
+}
