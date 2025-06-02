@@ -1,9 +1,13 @@
 import json
+import uuid
+
 from loguru import logger
 
 import mistune
 from mistune import HTMLRenderer
 from mistune.renderers.markdown import BlockState
+
+from model import ConceptValue, SubConcept, Concept, dataclass_encoder
 
 
 def _read_file(file_path):
@@ -42,48 +46,51 @@ def extract_titles(ast):
 
 def extract_content_map(ast):
     logger.info(f'extracting content map from AST')
-    content_map = {}
+    all_content = []
+    concept = None
+    sub_concept = None
     current_heading = None
-    sub_content = {}
     sub_heading = None
     for item in ast:
         logger.info(f'processing item index: {item["type"]}')
         if item.get('attrs', {}).get('level') == 2:
             if sub_heading is not None:
-                content_map[current_heading].append(sub_content)
+                concept.sub_concepts.append(sub_concept)
                 sub_heading = None
-                sub_content = {}
+            if current_heading is not None:
+                all_content.append(concept)
+
             current_heading = item['children'][0].get('raw')
-            content_map[current_heading] = {}
+            concept = Concept(str(uuid.uuid4()), current_heading, [], [])
         elif item.get('attrs', {}).get('level') == 3:
             sub_heading = item['children'][0].get('raw')
-            sub_content[sub_heading] = {}
+            sub_concept = SubConcept(str(uuid.uuid4()), sub_heading, [])
         elif sub_heading is not None:
-            if 'raw' in item:
-                sub_content[sub_heading].append(item['raw'])
-            elif 'children' in item:
-                html = convert_to_html(item['children'])
-                sub_content[sub_heading].append(html)
+            type = item['type']
+            if type == 'blank_line':
+                continue
+            value = item['raw'] if 'raw' in item else convert_to_html(item['children']) if 'children' in item else None
+            concept_value = ConceptValue(str(uuid.uuid4()), type, value)
+            sub_concept.value.append(concept_value)
         elif current_heading is not None:
-            if 'raw' in item:
-                content_map[current_heading].append(item['raw'])
-            elif 'children' in item:
-                html = convert_to_html(item['children'])
-                content_map[current_heading].append(html)
+            type = item['type']
+            if type == 'blank_line':
+                continue
+            value = item['raw'] if 'raw' in item else convert_to_html(item['children']) if 'children' in item else None
+            concept_value = ConceptValue(str(uuid.uuid4()), type, value)
+            concept.value.append(concept_value)
 
-    content_map_part = {}
-    count = 0
-    for key, value in content_map.items():
-        content_map_part[key] = value
-        count += 1
-        if count % 10 == 0:
-            with open(f"content_map_{count}.json", "w") as outfile:
-                json_string = json.dumps(content_map_part)
+    content_part = []
+    for index, item in enumerate(all_content):
+        content_part.append(item)
+        if (index+1)%10 == 0:
+            with open(f"content_map_{index}.json", "w") as outfile:
+                json_string = json.dumps(content_part, default=dataclass_encoder)
                 outfile.write(json_string)
                 logger.info(f'wrote content map to file')
-            content_map_part = {}
+            content_part = []
 
-    return content_map
+    return all_content
 
 
 
