@@ -9,6 +9,11 @@ declare global {
 
 const API = {
   sayHelloFromBridge: () => console.log('\nHello from bridgeAPI! 👋\n\n'),
+
+  initData: async () => {
+    return await ipcRenderer.invoke('initData')
+  },
+
   registerUser: (signupForm: SignupSchema) => {
     ipcRenderer.send('signupUser', signupForm)
   },

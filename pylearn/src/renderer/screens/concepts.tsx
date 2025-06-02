@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {ConceptSchema} from "shared/types";
+import {Concept, SubConcept} from "shared/types";
 import {ScrollArea, ScrollBar} from "renderer/components/ui/scroll-area";
 import {Button} from "renderer/components/ui/button";
 import {Card, CardContent, CardFooter, CardHeader} from "renderer/components/ui/card";
@@ -13,21 +13,26 @@ const conceptTypes: ConceptType[] = ['Beginner', 'Intermediate', 'Advanced', 'Al
 
 const Concepts = () => {
   const navigate = useNavigate();
-  const [concepts, setConcepts] = useState<ConceptSchema[]>([])
+  const [concepts, setConcepts] = useState<Concept[]>([])
   const [conceptType, setConceptType] = useState<ConceptType>('All')
-  const [expandedConcept, setExpandedConcept] = useState<ConceptSchema | undefined>(undefined)
+  const [expandedConcept, setExpandedConcept] = useState<Concept | undefined>(undefined)
 
   useEffect(() => {
-    const invokeConceptsChannel = async () => {
-      const concepts: ConceptSchema[] = await window.App.getConcepts()
+    const invokeConceptInitChannel = async () => {
+      const concepts: Concept[] = await window.App.initData()
       return concepts
     }
-    invokeConceptsChannel()
-      .then(concepts => setConcepts(concepts))
+    invokeConceptInitChannel()
+      .then(concepts => {
+        setConcepts(concepts)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }, []);
 
   return (
-    <ScrollContainer width={"900px"}>
+    <ScrollContainer>
       <HeroBreadcrumb path={[{link: "/dashboard", name: "Dashboard", state: {}}]} page={"Concepts"}/>
       <div className={"flex flex-col gap-8 my-4"}>
         <h1 className={"text-3xl font-bold"}>Explore Python Concepts</h1>
@@ -56,18 +61,18 @@ const Concepts = () => {
                       className={"flex flex-row h-[250px] border-1 border-gray-200 rounded-3xl shadow-none"}>
                   <CardContent>
                     <h1 className={"font-bold"}>{concept.name}</h1>
-                    <p className={"text-gray-500 mb-6"}>{concept.shortDescription}</p>
+                    <p className={"text-gray-500 mb-6"}>{concept.short_description}</p>
                     {
                       (expandedConcept && expandedConcept.id === concept.id) ? (
                         <Button variant={"outline"} onClick={() => setExpandedConcept(undefined)}>Collapse</Button>
                       ) : (
-                        <Button variant={"outline"} onClick={() => setExpandedConcept(concept)}>Expand</Button>
+                        <Button variant={"outline"} onClick={() => setExpandedConcept(concept)} disabled={concept.sub_concepts.length == 0}>Expand</Button>
                       )
                     }
                   </CardContent>
                   <CardFooter className={"ml-auto"}>
                     <div className={`w-[300px] h-full bg-center bg-cover bg-no-repeat rounded-3xl`}
-                         style={{"backgroundImage": `url(app://src/resources/assets/concepts/${'default.png' ?? concept.tags[0]})`}}>
+                         style={{"backgroundImage": `url(app://src/resources/assets/concepts/${'default.png' ?? concept.name})`}}>
                     </div>
                   </CardFooter>
                 </Card>
@@ -76,12 +81,12 @@ const Concepts = () => {
                     expandedConcept && expandedConcept.id === concept.id && (
                       <ScrollArea className="w-[900px]">
                         <div className="flex w-max space-x-4 py-4">
-                          {concept.sub_concepts.map((sub_concept) => (
+                          {concept.sub_concepts.map((sub_concept: SubConcept) => (
                             <Card key={sub_concept.name} className={"w-[350px] h-[155px] gap-0"}>
                               <CardHeader><ArrowUpAZ/></CardHeader>
                               <CardContent className={"overflow-ellipsis overflow-hidden"}>
                                 <h1 className={"font-bold"}>{sub_concept.name}</h1>
-                                <p className={"text-gray-500 overflow-ellipsis"}>{sub_concept.shortDescription}</p>
+                                <p className={"text-gray-500 overflow-ellipsis"}>{sub_concept.short_description}</p>
                               </CardContent>
                             </Card>
                           ))}

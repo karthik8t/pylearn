@@ -8,7 +8,7 @@ import {
 } from "renderer/components/ui/breadcrumb";
 import {Link} from "react-router-dom";
 
-const HeroBreadcrumb = (props: { path: { link: string, name: string, state: any}[] , page: string}) => {
+const HeroBreadcrumb = (props: { path: { link: string, name: string, state?: any}[] , page: string}) => {
   const {path, page} = props;
   return <Breadcrumb>
     <BreadcrumbList>

@@ -7,8 +7,8 @@ import Signup from "renderer/screens/signup";
 import Navigation from "renderer/components/common/navigation";
 import Dashboard from "renderer/screens/dashboard";
 import Concepts from "renderer/screens/concepts";
-import Concept from "renderer/screens/Concept";
-import SubConcept from "renderer/screens/sub-concept";
+import ConceptPage from "renderer/screens/concept-page";
+import SubConcept from "renderer/screens/sub-concept-page";
 
 export function AppRoutes() {
   return <Router
@@ -20,7 +20,7 @@ export function AppRoutes() {
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="/concepts" element={<Concepts/>}/>
-        <Route path="/concept" element={<Concept/>}/>
+        <Route path="/concept" element={<ConceptPage/>}/>
         <Route path="/sub-concept" element={<SubConcept/>}/>
       </Route>
     }
