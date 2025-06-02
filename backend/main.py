@@ -70,14 +70,14 @@ def extract_content_map(ast):
             if type == 'blank_line':
                 continue
             value = item['raw'] if 'raw' in item else convert_to_html(item['children']) if 'children' in item else None
-            concept_value = ConceptValue(str(uuid.uuid4()), type, value)
+            concept_value = ConceptValue(str(uuid.uuid4()), type, value.removesuffix("\n"))
             sub_concept.value.append(concept_value)
         elif current_heading is not None:
             type = item['type']
             if type == 'blank_line':
                 continue
             value = item['raw'] if 'raw' in item else convert_to_html(item['children']) if 'children' in item else None
-            concept_value = ConceptValue(str(uuid.uuid4()), type, value)
+            concept_value = ConceptValue(str(uuid.uuid4()), type, value.removesuffix("\n"))
             concept.value.append(concept_value)
 
     content_part = []
