@@ -1,4 +1,5 @@
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
+
 
 @dataclass()
 class ConceptValue:
@@ -22,7 +23,8 @@ class Concept:
     sub_concepts: list[SubConcept]
     short_description: str = 'short description not provided'
     description: str = 'description not provided'
-    tag: str = 'tag not provided'
+    difficulty: str = 'easy'
+    tags: list[str] = field(default_factory=list)
 
 def dataclass_encoder(obj):
     if isinstance(obj, ConceptValue):
