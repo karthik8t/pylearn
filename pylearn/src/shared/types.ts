@@ -45,25 +45,32 @@ export type UserSchema = z.infer<typeof userSchema>
 export const userListSchema = z.array(userSchema)
 export type UserListSchema = z.infer<typeof userListSchema>
 
-export const subConceptSchema = z.object({
-  id: z.string().nullish(),
-  name: z.string(),
-  shortDescription: z.string(),
-  description: z.string(),
-  tags: z.array(z.string()),
-  difficulty: z.enum(['beginner', 'intermediate', 'advanced']),
-  examples: z.array(z.string()),
-})
-export type SubConceptSchema = z.infer<typeof subConceptSchema>
+export const ConceptValueSchema = z.object({
+  id: z.string(),
+  type: z.string(),
+  value: z.string(),
+});
 
-export const conceptSchema = z.object({
-  id: z.string().nullish(),
+export type ConceptValue = z.infer<typeof ConceptValueSchema>;
+
+export const SubConceptSchema = z.object({
+  id: z.string(),
   name: z.string(),
-  shortDescription: z.string(),
-  description: z.string(),
+  value: z.array(ConceptValueSchema),
+  short_description: z.string().default("short description not provided"),
+  description: z.string().default("description not provided"),
+});
+
+export type SubConcept = z.infer<typeof SubConceptSchema>;
+
+export const ConceptSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  value: z.array(ConceptValueSchema),
+  sub_concepts: z.array(SubConceptSchema),
   tags: z.array(z.string()),
-  difficulty: z.enum(['beginner', 'intermediate', 'advanced']),
-  examples: z.array(z.string()),
-  sub_concepts: z.array(subConceptSchema),
-})
-export type ConceptSchema = z.infer<typeof conceptSchema>
+  short_description: z.string().default("short description not provided"),
+  description: z.string().default("description not provided"),
+});
+
+export type Concept = z.infer<typeof ConceptSchema>;

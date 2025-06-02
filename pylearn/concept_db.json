@@ -1,0 +1,397 @@
+[
+  {
+    "id": "5b1fc8a8-a99b-4667-893a-f4245f4ff7c3",
+    "name": "Main",
+    "value": [
+      {
+        "id": "1f10ee4b-b04a-4e9c-96c6-20b4668fb08f",
+        "type": "block_code",
+        "value": "if __name__ == '__main__':      # Skips next line if file was imported.\n    main()                      # Runs `def main(): ...` function."
+      }
+    ],
+    "sub_concepts": [],
+    "short_description": "short description not provided",
+    "description": "description not provided",
+    "difficulty": "easy",
+    "tags": []
+  },
+  {
+    "id": "73fb0504-ba45-4098-a96e-e41d63793766",
+    "name": "List",
+    "value": [
+      {
+        "id": "411781e4-9302-47e1-85f6-40abd7425eac",
+        "type": "block_code",
+        "value": "<list> = [<el_1>, <el_2>, ...]  # Creates a list object. Also list(<collection>)."
+      },
+      {
+        "id": "b8f4a118-92f4-4176-bcc3-206a7b61cd2e",
+        "type": "block_code",
+        "value": "<el>   = <list>[index]          # First index is 0. Last -1. Allows assignments.\n<list> = <list>[<slice>]        # Also <list>[from_inclusive : to_exclusive : \u00b1step]."
+      },
+      {
+        "id": "c9a4f2b0-dc39-494a-ba14-9177d29817a6",
+        "type": "block_code",
+        "value": "<list>.append(<el>)             # Appends element to the end. Also <list> += [<el>].\n<list>.extend(<collection>)     # Appends elements to the end. Also <list> += <coll>."
+      },
+      {
+        "id": "06409d1e-8272-48a5-8a6e-ae1fad19693a",
+        "type": "block_code",
+        "value": "<list>.sort()                   # Sorts elements in ascending order.\n<list>.reverse()                # Reverses the list in-place.\n<list> = sorted(<collection>)   # Returns new list with sorted elements.\n<iter> = reversed(<list>)       # Returns reversed iterator of elements."
+      },
+      {
+        "id": "3ba2db6c-e3dc-49ad-8ab6-b105a0e93833",
+        "type": "block_code",
+        "value": "<el>  = max(<collection>)       # Returns largest element. Also min(<el_1>, ...).\n<num> = sum(<collection>)       # Returns sum of elements. Also math.prod(<coll>)."
+      },
+      {
+        "id": "761f0098-2125-41a1-9c49-006cfbeba66a",
+        "type": "block_code",
+        "value": "elementwise_sum  = [sum(pair) for pair in zip(list_a, list_b)]\nsorted_by_second = sorted(<collection>, key=lambda el: el[1])\nsorted_by_both   = sorted(<collection>, key=lambda el: (el[1], el[0]))\nflatter_list     = list(itertools.chain.from_iterable(<list>))"
+      },
+      {
+        "id": "be4f260b-ee13-4786-bc91-632ca034bdd3",
+        "type": "list",
+        "value": "<li><strong>For details about sort(), sorted(), min() and max() see <a href=\"#sortable\">Sortable</a>.</strong></li>\n<li><strong>Module <a href=\"#operator\">operator</a> has function itemgetter() that can replace listed <a href=\"#lambda\">lambdas</a>.</strong></li>\n<li><strong>This text uses the term collection instead of iterable. For rationale see <a href=\"#collection\">Collection</a>.</strong></li>"
+      },
+      {
+        "id": "ddd59282-5041-4270-86a3-5201f1691cc1",
+        "type": "block_code",
+        "value": "<int> = len(<list>)             # Returns number of items. Also works on dict, set and string.\n<int> = <list>.count(<el>)      # Returns number of occurrences. Also `if <el> in <coll>: ...`.\n<int> = <list>.index(<el>)      # Returns index of the first occurrence or raises ValueError.\n<el>  = <list>.pop()            # Removes and returns item from the end or at index if passed.\n<list>.insert(<int>, <el>)      # Inserts item at index and moves the rest to the right.\n<list>.remove(<el>)             # Removes first occurrence of the item or raises ValueError.\n<list>.clear()                  # Removes all items. Also works on dictionary and set."
+      }
+    ],
+    "sub_concepts": [],
+    "short_description": "short description not provided",
+    "description": "description not provided",
+    "difficulty": "easy",
+    "tags": []
+  },
+  {
+    "id": "afa4ae48-67ba-43fe-83ad-c0ab89d754ba",
+    "name": "Dictionary",
+    "value": [
+      {
+        "id": "6418f264-1b72-461c-b9df-53b7b4881767",
+        "type": "block_code",
+        "value": "<dict> = {key_1: val_1, key_2: val_2, ...}      # Use `<dict>[key]` to get or set the value."
+      },
+      {
+        "id": "aae5a250-7530-4a0e-8d88-615f024285cf",
+        "type": "block_code",
+        "value": "<view> = <dict>.keys()                          # Collection of keys that reflects changes.\n<view> = <dict>.values()                        # Collection of values that reflects changes.\n<view> = <dict>.items()                         # Coll. of key-value tuples that reflects chgs."
+      },
+      {
+        "id": "60a917ca-3993-4339-a63c-4345ce78014c",
+        "type": "block_code",
+        "value": "value  = <dict>.get(key, default=None)          # Returns default if key is missing.\nvalue  = <dict>.setdefault(key, default=None)   # Returns and writes default if key is missing.\n<dict> = collections.defaultdict(<type>)        # Returns a dict with default value `<type>()`.\n<dict> = collections.defaultdict(lambda: 1)     # Returns a dict with default value 1."
+      },
+      {
+        "id": "019bbc36-c17b-49d6-819f-23e90ae7fe52",
+        "type": "block_code",
+        "value": "<dict> = dict(<collection>)                     # Creates a dict from coll. of key-value pairs.\n<dict> = dict(zip(keys, values))                # Creates a dict from two collections.\n<dict> = dict.fromkeys(keys [, value])          # Creates a dict from collection of keys."
+      },
+      {
+        "id": "96998f71-0343-4865-a811-fa24270af4ab",
+        "type": "block_code",
+        "value": "<dict>.update(<dict>)                           # Adds items. Replaces ones with matching keys.\nvalue = <dict>.pop(key)                         # Removes item or raises KeyError if missing.\n{k for k, v in <dict>.items() if v == value}    # Returns set of keys that point to the value.\n{k: v for k, v in <dict>.items() if k in keys}  # Filters the dictionary by keys."
+      }
+    ],
+    "sub_concepts": [
+      {
+        "id": "526783c7-8d69-41d2-bc33-32ea80ca41f8",
+        "name": "Counter",
+        "value": [
+          {
+            "id": "0eb8a872-231c-47bf-9596-1e51d455188d",
+            "type": "block_code",
+            "value": ">>> from collections import Counter\n>>> counter = Counter(['blue', 'blue', 'blue', 'red', 'red'])\n>>> counter['yellow'] += 1\n>>> print(counter.most_common())\n[('blue', 3), ('red', 2), ('yellow', 1)]"
+          }
+        ],
+        "short_description": "short description not provided",
+        "description": "description not provided"
+      }
+    ],
+    "short_description": "short description not provided",
+    "description": "description not provided",
+    "difficulty": "easy",
+    "tags": []
+  },
+  {
+    "id": "63147756-6c6e-41d3-b582-10fc9b697452",
+    "name": "Set",
+    "value": [
+      {
+        "id": "63f7d05c-dc5f-4fe0-bff2-1cd37719734d",
+        "type": "block_code",
+        "value": "<set> = {<el_1>, <el_2>, ...}                   # Use `set()` for empty set."
+      },
+      {
+        "id": "e7ee77dd-400e-4e91-a429-8502a42a0660",
+        "type": "block_code",
+        "value": "<set>.add(<el>)                                 # Or: <set> |= {<el>}\n<set>.update(<collection> [, ...])              # Or: <set> |= <set>"
+      },
+      {
+        "id": "a9ea3959-935a-43a0-aac5-7dd60dfb722e",
+        "type": "block_code",
+        "value": "<set>  = <set>.union(<coll.>)                   # Or: <set> | <set>\n<set>  = <set>.intersection(<coll.>)            # Or: <set> & <set>\n<set>  = <set>.difference(<coll.>)              # Or: <set> - <set>\n<set>  = <set>.symmetric_difference(<coll.>)    # Or: <set> ^ <set>\n<bool> = <set>.issubset(<coll.>)                # Or: <set> <= <set>\n<bool> = <set>.issuperset(<coll.>)              # Or: <set> >= <set>"
+      },
+      {
+        "id": "71366e4c-94f0-43b8-a9cc-bfc2f6377bc5",
+        "type": "block_code",
+        "value": "<el> = <set>.pop()                              # Raises KeyError if empty.\n<set>.remove(<el>)                              # Raises KeyError if missing.\n<set>.discard(<el>)                             # Doesn't raise an error."
+      }
+    ],
+    "sub_concepts": [
+      {
+        "id": "b6e09a98-08e0-42ea-82fb-a0796022fe82",
+        "name": "Frozen Set",
+        "value": [
+          {
+            "id": "4eadad54-c791-424d-a624-110326a5269d",
+            "type": "list",
+            "value": "<li><strong>Is immutable and hashable.</strong></li>\n<li><strong>That means it can be used as a key in a dictionary or as an element in a set.</strong></li>"
+          },
+          {
+            "id": "83e07fbe-1bc3-4456-96a8-80ab68983e4f",
+            "type": "block_code",
+            "value": "<frozenset> = frozenset(<collection>)"
+          }
+        ],
+        "short_description": "short description not provided",
+        "description": "description not provided"
+      }
+    ],
+    "short_description": "short description not provided",
+    "description": "description not provided",
+    "difficulty": "easy",
+    "tags": []
+  },
+  {
+    "id": "59caec67-ba76-4a31-9449-6638b858b50e",
+    "name": "Tuple",
+    "value": [
+      {
+        "id": "e7bc4094-aef8-4048-b18d-c94bef0e5a25",
+        "type": "paragraph",
+        "value": "<strong>Tuple is an immutable and hashable list.</strong>"
+      },
+      {
+        "id": "5883f83c-4a8d-4f24-99be-49d77d39aa7a",
+        "type": "block_code",
+        "value": "<tuple> = ()                               # Empty tuple.\n<tuple> = (<el>,)                          # Or: <el>,\n<tuple> = (<el_1>, <el_2> [, ...])         # Or: <el_1>, <el_2> [, ...]"
+      }
+    ],
+    "sub_concepts": [
+      {
+        "id": "23730bf5-0866-46a5-bca8-d28d36c229e9",
+        "name": "Named Tuple",
+        "value": [
+          {
+            "id": "616bd380-ae82-4520-aacb-ba841ba9a30c",
+            "type": "paragraph",
+            "value": "<strong>Tuple's subclass with named elements.</strong>"
+          },
+          {
+            "id": "527b11bc-7320-4807-9a06-fe5772f206a4",
+            "type": "block_code",
+            "value": ">>> from collections import namedtuple\n>>> Point = namedtuple('Point', 'x y')\n>>> p = Point(1, y=2)\n>>> print(p)\nPoint(x=1, y=2)\n>>> p[0], p.x\n(1, 1)"
+          }
+        ],
+        "short_description": "short description not provided",
+        "description": "description not provided"
+      }
+    ],
+    "short_description": "short description not provided",
+    "description": "description not provided",
+    "difficulty": "easy",
+    "tags": []
+  },
+  {
+    "id": "7395be70-c3bc-412c-9800-c23a0b298e6f",
+    "name": "Range",
+    "value": [
+      {
+        "id": "b99974e8-9e2d-4e83-96ea-dc8c148db420",
+        "type": "paragraph",
+        "value": "<strong>Immutable and hashable sequence of integers.</strong>"
+      },
+      {
+        "id": "a45eaca9-69f0-49da-af1f-a9542b2a0b32",
+        "type": "block_code",
+        "value": "<range> = range(stop)                      # I.e. range(to_exclusive).\n<range> = range(start, stop)               # I.e. range(from_inclusive, to_exclusive).\n<range> = range(start, stop, \u00b1step)        # I.e. range(from_inclusive, to_exclusive, \u00b1step)."
+      },
+      {
+        "id": "9c5918c8-e5ac-435c-b1b9-1ab21cb59f50",
+        "type": "block_code",
+        "value": ">>> [i for i in range(3)]\n[0, 1, 2]"
+      }
+    ],
+    "sub_concepts": [],
+    "short_description": "short description not provided",
+    "description": "description not provided",
+    "difficulty": "easy",
+    "tags": []
+  },
+  {
+    "id": "6e44d367-09dd-4f53-b83e-690fd35a1d12",
+    "name": "Enumerate",
+    "value": [
+      {
+        "id": "5242e35f-ab3a-4be2-bd4b-f638a3a3fb52",
+        "type": "block_code",
+        "value": "for i, el in enumerate(<coll>, start=0):   # Returns next element and its index on each pass.\n    ..."
+      }
+    ],
+    "sub_concepts": [],
+    "short_description": "short description not provided",
+    "description": "description not provided",
+    "difficulty": "easy",
+    "tags": []
+  },
+  {
+    "id": "9e876264-7ca3-44c6-a97c-1641ade5ee8f",
+    "name": "Iterator",
+    "value": [
+      {
+        "id": "2078daec-3c90-41f9-82d1-8c51149dd382",
+        "type": "paragraph",
+        "value": "<strong>Potentially endless stream of elements.</strong>"
+      },
+      {
+        "id": "f797eaec-b9d9-4f6a-810d-9893af0dd67f",
+        "type": "block_code",
+        "value": "<iter> = iter(<collection>)                # `iter(<iter>)` returns unmodified iterator.\n<iter> = iter(<function>, to_exclusive)    # A sequence of return values until 'to_exclusive'.\n<el>   = next(<iter> [, default])          # Raises StopIteration or returns 'default' on end.\n<list> = list(<iter>)                      # Returns a list of iterator's remaining elements."
+      }
+    ],
+    "sub_concepts": [
+      {
+        "id": "2ad644de-db94-42bc-8ba5-8e9af6ff8587",
+        "name": "Itertools",
+        "value": [
+          {
+            "id": "80674af1-b182-43d6-8c66-27f8cfc8791c",
+            "type": "block_code",
+            "value": "import itertools as it"
+          },
+          {
+            "id": "b456ff50-016d-4722-991b-6dd8e514725c",
+            "type": "block_code",
+            "value": "<iter> = it.count(start=0, step=1)         # Returns updated value endlessly. Accepts floats.\n<iter> = it.repeat(<el> [, times])         # Returns element endlessly or 'times' times.\n<iter> = it.cycle(<collection>)            # Repeats the sequence endlessly."
+          },
+          {
+            "id": "99314d9d-e628-4899-8562-a33f29fe6d3c",
+            "type": "block_code",
+            "value": "<iter> = it.chain(<coll>, <coll> [, ...])  # Empties collections in order (figuratively).\n<iter> = it.chain.from_iterable(<coll>)    # Empties collections inside a collection in order."
+          },
+          {
+            "id": "23ef8c31-a449-4e84-9299-f68d48ba10de",
+            "type": "block_code",
+            "value": "<iter> = it.islice(<coll>, to_exclusive)   # Only returns first 'to_exclusive' elements.\n<iter> = it.islice(<coll>, from_inc, \u2026)    # `to_exclusive, +step_size`. Indices can be None."
+          }
+        ],
+        "short_description": "short description not provided",
+        "description": "description not provided"
+      }
+    ],
+    "short_description": "short description not provided",
+    "description": "description not provided",
+    "difficulty": "easy",
+    "tags": []
+  },
+  {
+    "id": "3845bf48-651a-4db8-ac18-19223c4eb90b",
+    "name": "Generator",
+    "value": [
+      {
+        "id": "4916d240-c467-41cc-8583-d22fa03fa0f3",
+        "type": "list",
+        "value": "<li><strong>Any function that contains a yield statement returns a generator.</strong></li>\n<li><strong>Generators and iterators are interchangeable.</strong></li>"
+      },
+      {
+        "id": "55c9a29a-49ac-4fcb-8231-e4bb2e6f88de",
+        "type": "block_code",
+        "value": "def count(start, step):\n    while True:\n        yield start\n        start += step"
+      },
+      {
+        "id": "4e108b7b-d73d-41bb-a6e6-d224ba246d4f",
+        "type": "block_code",
+        "value": ">>> counter = count(10, 2)\n>>> next(counter), next(counter), next(counter)\n(10, 12, 14)"
+      }
+    ],
+    "sub_concepts": [],
+    "short_description": "short description not provided",
+    "description": "description not provided",
+    "difficulty": "easy",
+    "tags": []
+  },
+  {
+    "id": "afa82418-9059-4ad5-9e9e-526a411994b4",
+    "name": "Type",
+    "value": [
+      {
+        "id": "3fc401fa-5e66-4f10-b7e2-efbcefb4cdda",
+        "type": "list",
+        "value": "<li><strong>Everything is an object.</strong></li>\n<li><strong>Every object has a type.</strong></li>\n<li><strong>Type and class are synonymous.</strong></li>"
+      },
+      {
+        "id": "4a8d7564-c0d5-44ef-ad35-a5dab633668d",
+        "type": "block_code",
+        "value": "<type> = type(<el>)                          # Or: <el>.__class__\n<bool> = isinstance(<el>, <type>)            # Or: issubclass(type(<el>), <type>)"
+      },
+      {
+        "id": "34ffd8de-6b8a-43d8-8707-446b0508721c",
+        "type": "block_code",
+        "value": ">>> type('a'), 'a'.__class__, str\n(<class 'str'>, <class 'str'>, <class 'str'>)"
+      },
+      {
+        "id": "ae2e2555-eba1-42a2-b348-6df704f16c99",
+        "type": "heading",
+        "value": "Some types do not have built-in names, so they must be imported:"
+      },
+      {
+        "id": "36a2eea4-b67e-4263-a25e-14df8c228945",
+        "type": "block_code",
+        "value": "from types import FunctionType, MethodType, LambdaType, GeneratorType, ModuleType"
+      }
+    ],
+    "sub_concepts": [
+      {
+        "id": "141aeddb-bb0e-4071-a353-401840593edb",
+        "name": "Abstract Base Classes",
+        "value": [
+          {
+            "id": "df24e638-f6f2-48c4-9eda-bb96a5669bc8",
+            "type": "paragraph",
+            "value": "<strong>Each abstract base class specifies a set of virtual subclasses. These classes are then recognized by isinstance() and issubclass() as subclasses of the ABC, although they are really not. ABC can also manually decide whether or not a specific class is its virtual subclass, usually based on which methods the class has implemented. For instance, Iterable ABC looks for method iter(), while Collection ABC looks for iter(), contains() and len().</strong>"
+          },
+          {
+            "id": "e5c0f6ca-a4cf-4b7d-ad36-05d6dfcbf23f",
+            "type": "block_code",
+            "value": ">>> from collections.abc import Iterable, Collection, Sequence\n>>> isinstance([1, 2, 3], Iterable)\nTrue"
+          },
+          {
+            "id": "6ef3fff8-e8d6-4513-8fde-8e1492c36662",
+            "type": "block_code",
+            "value": "+------------------+------------+------------+------------+\n|                  |  Iterable  | Collection |  Sequence  |\n+------------------+------------+------------+------------+\n| list, range, str |    yes     |    yes     |    yes     |\n| dict, set        |    yes     |    yes     |            |\n| iter             |    yes     |            |            |\n+------------------+------------+------------+------------+"
+          },
+          {
+            "id": "c80c376b-bebe-4ed6-8bb1-c5c7d241c44d",
+            "type": "block_code",
+            "value": ">>> from numbers import Number, Complex, Real, Rational, Integral\n>>> isinstance(123, Number)\nTrue"
+          },
+          {
+            "id": "fccadb4a-79e4-4145-a03f-aacd8b0d6241",
+            "type": "block_code",
+            "value": "+--------------------+----------+----------+----------+----------+----------+\n|                    |  Number  |  Complex |   Real   | Rational | Integral |\n+--------------------+----------+----------+----------+----------+----------+\n| int                |   yes    |   yes    |   yes    |   yes    |   yes    |\n| fractions.Fraction |   yes    |   yes    |   yes    |   yes    |          |\n| float              |   yes    |   yes    |   yes    |          |          |\n| complex            |   yes    |   yes    |          |          |          |\n| decimal.Decimal    |   yes    |          |          |          |          |\n+--------------------+----------+----------+----------+----------+----------+"
+          }
+        ],
+        "short_description": "short description not provided",
+        "description": "description not provided"
+      }
+    ],
+    "short_description": "short description not provided",
+    "description": "description not provided",
+    "difficulty": "easy",
+    "tags": []
+  }
+]

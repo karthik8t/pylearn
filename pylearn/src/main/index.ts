@@ -3,7 +3,7 @@ import {app, ipcMain, protocol} from 'electron'
 import {makeAppWithSingleInstanceLock} from 'lib/electron-app/factories/app/instance'
 import {makeAppSetup} from 'lib/electron-app/factories/app/setup'
 import {MainWindow} from './windows/main'
-import {getConcepts, loginUser, signupUser} from "lib/services/user-service";
+import {getConcepts, loadInitData, loginUser, signupUser} from "lib/services/user-service";
 import * as path from "node:path";
 import * as fs from "node:fs";
 import getMimeType from "lib/electron-app/utils/util";
@@ -25,6 +25,12 @@ makeAppWithSingleInstanceLock(async () => {
   });
 
   await makeAppSetup(MainWindow)
+})
+
+
+ipcMain.handle('initData', (_event, ...data) => {
+  const response = loadInitData()
+  return Promise.resolve(response)
 })
 
 // Handle signup data from renderer

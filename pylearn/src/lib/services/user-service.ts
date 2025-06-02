@@ -1,4 +1,4 @@
-import {ConceptSchema, LoginSchema, SignupSchema, UserListSchema, UserSchema} from "shared/types";
+import {Concept, ConceptSchema, LoginSchema, SignupSchema, UserListSchema, UserSchema} from "shared/types";
 
 export const signupUser = async (signupForm: SignupSchema) => {
   console.log('Starting user signup process...');
@@ -50,5 +50,16 @@ export const getConcepts = async () => {
   const db = new Low<ConceptSchema[]>(adapter, defaultData);
   await db.read();
   db.data = db.data || [];
+  return db.data;
+}
+
+export const loadInitData = async () => {
+  console.log('Starting loadInitData process...');
+  const defaultData: Concept[] = [];
+  const { Low } = await import('lowdb');
+  const { JSONFile } = await import('lowdb/node');
+  const adapter = new JSONFile<Concept[]>('concept_db.json');
+  const db = new Low<Concept[]>(adapter, defaultData);
+  await db.read()
   return db.data;
 }
