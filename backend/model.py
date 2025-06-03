@@ -21,10 +21,25 @@ class Concept:
     name: str
     value: list[ConceptValue]
     sub_concepts: list[SubConcept]
-    short_description: str = 'short description not provided'
-    description: str = 'description not provided'
-    difficulty: str = 'easy'
+    short_description: str = None
+    description: str = None
+    difficulty: str = None
+    common_pitfalls: list[str] = field(default_factory=list)
+    related_concepts: list[str] = field(default_factory=list)
     tags: list[str] = field(default_factory=list)
+
+@dataclass()
+class OllamaResponse:
+    short_description: str = None
+    description: str = None
+    difficulty: str = None
+    related_concepts: list[str] = field(default_factory=list)
+    common_pitfalls: list[str] = field(default_factory=list)
+
+def dataclass_decoder(obj):
+    if '__class__' in obj and obj['__class__'] == 'OllamaResponse':
+        print(obj)
+        return OllamaResponse(**obj)
 
 def dataclass_encoder(obj):
     if isinstance(obj, ConceptValue):
