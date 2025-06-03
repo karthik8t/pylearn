@@ -26,7 +26,7 @@ const ConceptPage = () => {
           <HoverCard>
             <HoverCardTrigger>
               <p className={"font-bold my-2"}>Description</p>
-              {concept.description && <p className={"heroDescription"}>{concept.description}</p>}
+              {concept.description && <p className={"heroDescription"}>{concept.description.split("\n").map(line => <>{line}<br /></>)}</p>}
             </HoverCardTrigger>
             <HoverCardContent className={"w-[400px]"}>
               {concept.short_description && <p className={"heroShortDescription"}>{concept.short_description}</p>}
@@ -44,22 +44,24 @@ const ConceptPage = () => {
             <HtmlScript type={line.type} value={line.value}/>
           ))}
         </div>
-        <div id={"concept-sub-concept"}>
-          <h2 className={"heroSubHeading"}>Sub-concepts</h2>
-          <div className={"grid grid-cols-4 gap-4"}>
-            {concept.sub_concepts.map((sub_concept) => (
-              <div key={sub_concept.name} className={"flex flex-col"}>
-                <Link to={`/sub-concept`} state={{concept: concept, sub_concept: sub_concept}}>
-                  <div className={"h-[175px] bg-center bg-cover bg-no-repeat rounded-3xl"}
-                       style={{"backgroundImage": `url(app://src/resources/assets/concepts/${"default" ?? sub_concept.name}.png)`}}>
-                  </div>
-                  <h3 className={"font-bold my-2"}>{sub_concept.name}</h3>
-                  <p>{sub_concept.short_description}</p>
-                </Link>
-              </div>
-            ))}
+        {
+          concept.sub_concepts.length != 0 && <div id={"concept-sub-concept"}>
+            <h2 className={"heroSubHeading"}>Sub-concepts</h2>
+            <div className={"grid grid-cols-4 gap-4"}>
+              {concept.sub_concepts.map((sub_concept) => (
+                <div key={sub_concept.name} className={"flex flex-col"}>
+                  <Link to={`/sub-concept`} state={{concept: concept, sub_concept: sub_concept}}>
+                    <div className={"h-[175px] bg-center bg-cover bg-no-repeat rounded-3xl"}
+                         style={{"backgroundImage": `url(app://src/resources/assets/concepts/${"default" ?? sub_concept.name}.png)`}}>
+                    </div>
+                    <h3 className={"font-bold my-2"}>{sub_concept.name}</h3>
+                    <p>{sub_concept.short_description}</p>
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        }
       </div>
     </ScrollContainer>
   )
