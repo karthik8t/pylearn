@@ -64,13 +64,12 @@ const Concepts = () => {
                   <CardContent>
                     <h1 className={"font-bold"}>{concept.name}</h1>
                     <p className={"text-gray-500 mb-6"}>{concept.short_description}</p>
-                    {
-                      (expandedConcept && expandedConcept.id === concept.id) ? (
-                        <Button variant={"outline"} onClick={() => setExpandedConcept(undefined)}>Collapse</Button>
-                      ) : (
-                        <Button variant={"outline"} onClick={() => setExpandedConcept(concept)} disabled={concept.sub_concepts.length == 0}>Expand</Button>
-                      )
-                    }
+                    <Button
+                      variant={"outline"}
+                      disabled={concept.sub_concepts.length === 0}
+                      onClick={() => setExpandedConcept(prevState => prevState?.id === concept.id ? undefined : concept)}>
+                      {expandedConcept?.id === concept.id ? "Collapse" : "Expand"}
+                    </Button>
                   </CardContent>
                   <CardFooter className={"ml-auto"}>
                     <div className={`w-[300px] h-full bg-center bg-cover bg-no-repeat rounded-3xl`}
