@@ -1,108 +1,77 @@
 import json
-import uuid
+from email.policy import strict
 
+from model import Concept, dataclass_encoder, OllamaResponse, dataclass_decoder
+from markdown_util import extract_concepts
+
+from os.path import exists
 from loguru import logger
 
-import mistune
-from mistune import HTMLRenderer
-from mistune.renderers.markdown import BlockState
+from ollama_util import get_response
 
-from model import ConceptValue, SubConcept, Concept, dataclass_encoder
+CONCEPTS_FILE = "content_db.json"
+# CONCEPTS_FILE = "content_map_9.json"
 
-
-def _read_file(file_path):
-    with open(file_path, "r", encoding='utf8') as file:
-        read = file.read()
-        return read
-
-
-def file_to_ast(file_path="python-cheatsheet.txt"):
-    logger.info(f'converting file to AST')
-    file_content = _read_file(file_path)
-    markdown = mistune.create_markdown(renderer=None)
-    ast = markdown(file_content)
-    with open("ast.json", "w") as outfile:
-        json_string = json.dumps(ast)
-        outfile.write(json_string)
-        logger.info(f'wrote AST to file')
-    return ast
+def add_additional_info(concepts):
+    for concept in concepts:
+        if concept.get('description') is None:
+            response: OllamaResponse = get_response(concept.get('name'))
+            concept['short_description'] = response.get('short_description')
+            concept['description'] = response.get('description')
+            concept['difficulty'] = response.get('difficulty')
+            concept['common_pitfalls'] = response.get('common_pitfalls', [])
+            concept['related_concepts'] = response.get('related_concepts', [])
+            with open(CONCEPTS_FILE, 'w') as file:
+                dumps = json.dumps(concepts)
+                file.write(dumps)
+                logger.info(f'saved new details for {concept.get("name")}')
 
 
-def convert_to_html(ast):
-    logger.info(f'converting AST to HTML')
-    renderer = HTMLRenderer()
-    html = renderer(ast, state=BlockState())
-    return html
+example = """{
+  "description": "In Python, the `__main__` module is a special built-in variable that plays a crucial role in determining how scripts are executed. When a Python script is run directly (i.e., from the command line), the interpreter sets the `__name__` attribute of the script's global scope to the string `'__main__'`. This mechanism allows developers to conditionally execute code based on whether a script is being run as the main program or if it has been imported as a module in another script. The `if __name__ == '__main__':` idiom is used to encapsulate code that should only be executed when the script is run directly, rather than when it's imported. This pattern facilitates code reuse and modularity by allowing functions and classes defined in a script to be imported without executing top-level script code.\n\nInternally, the `__main__` module is created dynamically at runtime. When Python starts up, it creates a special module named `__main__`, which serves as the environment where the top-level statements of the program are executed. If a file is specified on the command line, its contents become part of the `__main__` module. This dynamic nature allows for flexibility in script execution and testing.\n\nFrom an advanced perspective, understanding `__main__` is essential for designing modular codebases that can serve both as standalone programs and as libraries. It also plays a role in testing and debugging by allowing developers to include test suites within the same file as the module's main functionality, which are only executed when the script is run directly.\n\nThe use of `if __name__ == '__main__':` is not just limited to scripts but can be applied to modules intended for reuse. This practice ensures that any code meant for direct execution does not interfere with the module’s utility as an importable component, thus supporting clean separation of concerns and enhancing maintainability.\n\nPerformance implications are minimal, as this check incurs no significant overhead. However, it is a critical feature for structuring Python applications in a way that promotes clarity, reusability, and testability.",
+  "short_description": "`__main__` determines if a script runs standalone or is imported, enabling conditional execution of code blocks.",
+  "difficulty": "intermediate",
+  "common_pitfalls": [
+    "Forgetting to wrap executable code with `if __name__ == '__main__':`, leading to unintended behavior when scripts are imported.",
+    "Misunderstanding that the `__main__` module is not a physical file but a special environment created by Python at runtime.",
+    "Overlooking the utility of this pattern for structuring test suites within modules."
+  ],
+  "related_concepts": [
+    "`if __name__ == '__main__':` idiom",
+    "Modules and imports",
+    "Script execution vs. module importation",
+    "Testing and debugging Python code"
+  ]
+}"""
 
 
-def extract_titles(ast):
-    logger.info(f'extracting titles from AST')
-    titles = []
-    for item in ast:
-        if item.get('attrs', {}).get('level') == 2:
-            children_ = item['children']
-            titles.append(children_[0].get('raw'))
-    return titles
-
-def extract_content_map(ast):
-    logger.info(f'extracting content map from AST')
-    all_content = []
-    concept = None
-    sub_concept = None
-    current_heading = None
-    sub_heading = None
-    for item in ast:
-        logger.info(f'processing item index: {item["type"]}')
-        if item.get('attrs', {}).get('level') == 2:
-            if item['children'][0].get('raw') in ['Contents']:
-                continue
-            if sub_heading is not None:
-                concept.sub_concepts.append(sub_concept)
-                sub_heading = None
-            if current_heading is not None:
-                all_content.append(concept)
-
-            current_heading = item['children'][0].get('raw')
-            concept = Concept(str(uuid.uuid4()), current_heading, [], [])
-        elif item.get('attrs', {}).get('level') == 3:
-            sub_heading = item['children'][0].get('raw')
-            sub_concept = SubConcept(str(uuid.uuid4()), sub_heading, [])
-        elif sub_heading is not None:
-            type = item['type']
-            if type == 'blank_line':
-                continue
-            value = item['raw'] if 'raw' in item else convert_to_html(item['children']) if 'children' in item else None
-            concept_value = ConceptValue(str(uuid.uuid4()), type, value.removesuffix("\n"))
-            sub_concept.value.append(concept_value)
-        elif current_heading is not None:
-            type = item['type']
-            if type == 'blank_line':
-                continue
-            value = item['raw'] if 'raw' in item else convert_to_html(item['children']) if 'children' in item else None
-            concept_value = ConceptValue(str(uuid.uuid4()), type, value.removesuffix("\n"))
-            concept.value.append(concept_value)
-
-    content_part = []
-    for index, item in enumerate(all_content):
-        content_part.append(item)
-        if (index+1)%10 == 0:
-            with open(f"content_map_{index}.json", "w") as outfile:
-                json_string = json.dumps(content_part, default=dataclass_encoder)
-                outfile.write(json_string)
-                logger.info(f'wrote content map to file')
-            content_part = []
-
-    return all_content
-
+def start_script():
+    global file
+    content_exists = exists(CONCEPTS_FILE)
+    if not content_exists:
+        concepts: list[Concept] = extract_concepts()
+    else:
+        logger.info(f"retrieving concepts from {CONCEPTS_FILE}")
+        with open(CONCEPTS_FILE, 'r') as file:
+            json_data: list[Concept] = json.load(file)
+            concepts = json_data
+    add_additional_info(concepts)
+    logger.info('saving updated content')
+    with open("updated_content.json", 'w') as file:
+        json_dumps = json.dumps(concepts, default=dataclass_encoder)
+        file.write(json_dumps)
 
 
 if __name__ == "__main__":
-    print("Hello World")
-    # _extract_ast_save()
-    ast = file_to_ast()
-    # list_of_titles = extract_titles(ast)
-    # print(list_of_titles)
-    # html = ast_to_html(ast)
-    # print(html)
-    content_map = extract_content_map(ast)
-    print(content_map)
+    start_script()
+    # try:
+    #     concept_data: OllamaResponse = json.loads(example, strict=False)
+    #     print(concept_data)
+    #     print(f"Description: {concept_data.get('description')}")
+    #     print(f"Short Description: {concept_data.get(short_description)}")
+    #     print(f"Difficulty: {concept_data.difficulty}")
+    #     print(f"Common Pitfalls: {concept_data.common_pitfalls}")
+    #     print(f"Related Concepts: {concept_data.related_concepts}")
+    # except Exception as e:
+    #     logger.error(f"Error parsing JSON: {e}")
+    #     print(f"Error parsing JSON: {e}")
