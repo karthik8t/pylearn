@@ -71,6 +71,9 @@ export const ConceptSchema = z.object({
   tags: z.array(z.string()),
   short_description: z.string().default("short description not provided"),
   description: z.string().default("description not provided"),
+  difficulty: z.enum(['beginner', 'intermediate', 'advanced']).default('beginner'),
+  common_pitfalls: z.array(z.string()).default([]),
+  related_concepts: z.array(z.string()).default([]),
 });
 
 export type Concept = z.infer<typeof ConceptSchema>;

@@ -1,108 +1,136 @@
 [
   {
-    "id": "5b1fc8a8-a99b-4667-893a-f4245f4ff7c3",
+    "id": "f056cfa4-8caf-4dec-9ea4-f0f72788add5",
     "name": "Main",
     "value": [
       {
-        "id": "1f10ee4b-b04a-4e9c-96c6-20b4668fb08f",
+        "id": "94840f22-ac29-4abc-ac81-88a4bd33d9a2",
         "type": "block_code",
         "value": "if __name__ == '__main__':      # Skips next line if file was imported.\n    main()                      # Runs `def main(): ...` function."
       }
     ],
     "sub_concepts": [],
-    "short_description": "short description not provided",
-    "description": "description not provided",
-    "difficulty": "easy",
+    "short_description": "`__main__` is a special attribute that determines if a Python file is executed as the main program or imported as a module, enabling conditional code execution based on context.",
+    "description": "In Python, the `__main__` module represents the entry point of a program when executed directly. It is a built-in attribute of modules used to determine whether a script is being run as the main module or if it's being imported into another module. When a Python file is executed, Python assigns the special value `__name__ = '__main__'` to the `__name__` variable within that script. This allows developers to write code that can be used both as an importable module and as a standalone program.\n\nThe significance of `__main__` lies in its ability to provide conditional execution, ensuring certain parts of the code only run when the file is executed directly rather than being imported. This pattern is widely utilized for testing or running scripts. For instance, encapsulating test functions within an `if __name__ == '__main__':` block ensures they don't execute during module imports in other contexts.\n\nThe design promotes modularity and reusability by allowing code to be packaged into functions or classes that can operate independently of their execution context. This is particularly useful for large-scale applications, where separating concerns (like configuration vs. functionality) enhances maintainability.\n\nUnderlying this mechanism are Python's module importing system and name resolution rules. When a script runs, it first processes all top-level code not inside functions or classes before assigning the `__name__` variable. This means that any initialization required for a script to function correctly as an import must precede this assignment.\n\nWhile PEPs specifically dedicated to `__main__` are scarce due to its fundamental nature, it plays a critical role in idiomatic Python code practices outlined in various community style guides and tutorials. For example, PEP 8 emphasizes the importance of clear separation between module initialization logic and script execution through this mechanism.\n\nAdvanced use cases include creating command-line interfaces (CLIs) where scripts can import utility functions from other modules while containing their own CLI-specific logic under `if __name__ == '__main__':`. It also facilitates test-driven development by allowing the inclusion of test suites directly in scripts that don't execute during regular imports.\n\nIn terms of performance, using `__main__` does not introduce significant overhead. However, it can impact code organization and readability, especially if overused or misapplied (e.g., placing substantial execution logic outside the main block). Proper structuring ensures clear separation between module-level definitions and script-specific logic.",
+    "difficulty": "intermediate",
+    "common_pitfalls": [
+      "Placing substantial script-specific logic outside of the `if __name__ == '__main__':` block, leading to unintended execution during imports.",
+      "Misunderstanding scope and initialization order when using `__main__`, which can lead to hard-to-debug errors if import time side effects occur.",
+      "Failing to encapsulate test code within the main block, causing tests to run unintentionally when modules are imported."
+    ],
+    "related_concepts": [
+      "`import` statement",
+      "Modules and Packages",
+      "Name Resolution in Python",
+      "PEP 8 -- Style Guide for Python Code",
+      "Command-line Interfaces (CLI) with argparse or click"
+    ],
     "tags": []
   },
   {
-    "id": "73fb0504-ba45-4098-a96e-e41d63793766",
+    "id": "a7ed27d1-5356-4707-aee0-96a5b8cd4547",
     "name": "List",
     "value": [
       {
-        "id": "411781e4-9302-47e1-85f6-40abd7425eac",
+        "id": "b0fb4608-5479-49a3-82ca-3aadef5405c4",
         "type": "block_code",
         "value": "<list> = [<el_1>, <el_2>, ...]  # Creates a list object. Also list(<collection>)."
       },
       {
-        "id": "b8f4a118-92f4-4176-bcc3-206a7b61cd2e",
+        "id": "ee3d8291-6b70-4a00-9313-4ed62c9714c1",
         "type": "block_code",
         "value": "<el>   = <list>[index]          # First index is 0. Last -1. Allows assignments.\n<list> = <list>[<slice>]        # Also <list>[from_inclusive : to_exclusive : \u00b1step]."
       },
       {
-        "id": "c9a4f2b0-dc39-494a-ba14-9177d29817a6",
+        "id": "dfee7a15-d97a-4f6e-9e40-af81ec8e5e28",
         "type": "block_code",
         "value": "<list>.append(<el>)             # Appends element to the end. Also <list> += [<el>].\n<list>.extend(<collection>)     # Appends elements to the end. Also <list> += <coll>."
       },
       {
-        "id": "06409d1e-8272-48a5-8a6e-ae1fad19693a",
+        "id": "9a5575fc-d678-4584-87f8-d752947d95ab",
         "type": "block_code",
         "value": "<list>.sort()                   # Sorts elements in ascending order.\n<list>.reverse()                # Reverses the list in-place.\n<list> = sorted(<collection>)   # Returns new list with sorted elements.\n<iter> = reversed(<list>)       # Returns reversed iterator of elements."
       },
       {
-        "id": "3ba2db6c-e3dc-49ad-8ab6-b105a0e93833",
+        "id": "7dd2a8f4-b150-411e-a24c-2c48814edf0c",
         "type": "block_code",
         "value": "<el>  = max(<collection>)       # Returns largest element. Also min(<el_1>, ...).\n<num> = sum(<collection>)       # Returns sum of elements. Also math.prod(<coll>)."
       },
       {
-        "id": "761f0098-2125-41a1-9c49-006cfbeba66a",
+        "id": "b9725a7a-727a-4b2b-a482-a799581c620e",
         "type": "block_code",
         "value": "elementwise_sum  = [sum(pair) for pair in zip(list_a, list_b)]\nsorted_by_second = sorted(<collection>, key=lambda el: el[1])\nsorted_by_both   = sorted(<collection>, key=lambda el: (el[1], el[0]))\nflatter_list     = list(itertools.chain.from_iterable(<list>))"
       },
       {
-        "id": "be4f260b-ee13-4786-bc91-632ca034bdd3",
+        "id": "675eb5a4-317f-41a5-ac6b-a5da5e7e851c",
         "type": "list",
         "value": "<li><strong>For details about sort(), sorted(), min() and max() see <a href=\"#sortable\">Sortable</a>.</strong></li>\n<li><strong>Module <a href=\"#operator\">operator</a> has function itemgetter() that can replace listed <a href=\"#lambda\">lambdas</a>.</strong></li>\n<li><strong>This text uses the term collection instead of iterable. For rationale see <a href=\"#collection\">Collection</a>.</strong></li>"
       },
       {
-        "id": "ddd59282-5041-4270-86a3-5201f1691cc1",
+        "id": "c54f854a-11b6-46d0-ba1e-dede63778ae0",
         "type": "block_code",
         "value": "<int> = len(<list>)             # Returns number of items. Also works on dict, set and string.\n<int> = <list>.count(<el>)      # Returns number of occurrences. Also `if <el> in <coll>: ...`.\n<int> = <list>.index(<el>)      # Returns index of the first occurrence or raises ValueError.\n<el>  = <list>.pop()            # Removes and returns item from the end or at index if passed.\n<list>.insert(<int>, <el>)      # Inserts item at index and moves the rest to the right.\n<list>.remove(<el>)             # Removes first occurrence of the item or raises ValueError.\n<list>.clear()                  # Removes all items. Also works on dictionary and set."
       }
     ],
     "sub_concepts": [],
-    "short_description": "short description not provided",
-    "description": "description not provided",
-    "difficulty": "easy",
+    "short_description": "A versatile, mutable sequence type in Python, supporting dynamic resizing and a wide range of operations.",
+    "description": "In Python, a `list` is a versatile, mutable sequence type that supports indexing, slicing, appending, removing elements, and several other operations. Lists are implemented as dynamic arrays, which means they allocate more space than necessary to accommodate future growth without having to resize the underlying array with each insertion. This strategy results in amortized constant time complexity for append operations, making lists highly efficient for tasks involving frequent additions.\n\nFrom an advanced perspective, Python lists support a wide range of operations that can be performed both in-place and returning new instances (e.g., `append()` vs. `+`). They are iterable, supporting the iterator protocol by implementing `__iter__` and `__next__`, making them compatible with loops, comprehensions, and functions like `map()`, `filter()`, etc. Lists can also contain mixed data types, providing flexibility but potentially impacting performance due to type-checking overhead.\n\nAdvanced use cases for lists include leveraging list comprehensions for concise construction of new lists by iterating over sequences or other iterables, utilizing nested lists for matrix-like structures, and employing slicing for efficient sub-sequence extraction. Moreover, the `list.sort()` method and its counterpart `sorted()` allow for customization via key functions and reverse sorting, enabling complex sorting operations on list elements.\n\nPerformance implications are notable; while list operations like indexing (`O(1)`) and appending (`amortized O(1)`) are efficient, searching or removing elements by value (`O(n)` in the worst case) can be costly for large datasets. Thus, alternative data structures such as sets or dictionaries might be preferred when lookup speed is critical.\n\nIn recent Python versions (3.9+), lists benefit from optimizations and additional methods like `list.remove(i, j)` for removing slices and enhancements to list comprehensions that support multiple input sequences through the `zip` function directly in the comprehension syntax. These improvements provide advanced users with more tools for writing clean, efficient code.",
+    "difficulty": "Intermediate",
+    "common_pitfalls": [
+      "Overusing lists for performance-sensitive tasks where alternative data structures might be more appropriate (e.g., using sets or dictionaries for fast lookups).",
+      "Forgetting that list comprehensions create new lists, leading to unnecessary memory usage if not used judiciously.",
+      "Misunderstanding the mutability of lists; inadvertently modifying a list while iterating over it can lead to unexpected behavior.",
+      "Ignoring the type-checking overhead when lists contain mixed data types."
+    ],
+    "related_concepts": [
+      "List Comprehensions",
+      "Mutable Sequences",
+      "Slicing",
+      "Dynamic Arrays",
+      "Iterators",
+      "Tuples (for immutable sequences)",
+      "Sets (for unique, unordered collections)",
+      "Dictionaries (for key-value pairs)"
+    ],
     "tags": []
   },
   {
-    "id": "afa4ae48-67ba-43fe-83ad-c0ab89d754ba",
+    "id": "973449d2-62d9-47fc-9a45-69bb222df8d3",
     "name": "Dictionary",
     "value": [
       {
-        "id": "6418f264-1b72-461c-b9df-53b7b4881767",
+        "id": "8b2e3dd5-bb72-431c-bfbf-72faae60362a",
         "type": "block_code",
         "value": "<dict> = {key_1: val_1, key_2: val_2, ...}      # Use `<dict>[key]` to get or set the value."
       },
       {
-        "id": "aae5a250-7530-4a0e-8d88-615f024285cf",
+        "id": "a4bac44c-eadf-4e03-802d-e2aff23ee68b",
         "type": "block_code",
         "value": "<view> = <dict>.keys()                          # Collection of keys that reflects changes.\n<view> = <dict>.values()                        # Collection of values that reflects changes.\n<view> = <dict>.items()                         # Coll. of key-value tuples that reflects chgs."
       },
       {
-        "id": "60a917ca-3993-4339-a63c-4345ce78014c",
+        "id": "96f16209-8546-4412-97d7-086c3e48c7f4",
         "type": "block_code",
         "value": "value  = <dict>.get(key, default=None)          # Returns default if key is missing.\nvalue  = <dict>.setdefault(key, default=None)   # Returns and writes default if key is missing.\n<dict> = collections.defaultdict(<type>)        # Returns a dict with default value `<type>()`.\n<dict> = collections.defaultdict(lambda: 1)     # Returns a dict with default value 1."
       },
       {
-        "id": "019bbc36-c17b-49d6-819f-23e90ae7fe52",
+        "id": "3ea04801-7a97-4fc3-8695-febfc0c7df1d",
         "type": "block_code",
         "value": "<dict> = dict(<collection>)                     # Creates a dict from coll. of key-value pairs.\n<dict> = dict(zip(keys, values))                # Creates a dict from two collections.\n<dict> = dict.fromkeys(keys [, value])          # Creates a dict from collection of keys."
       },
       {
-        "id": "96998f71-0343-4865-a811-fa24270af4ab",
+        "id": "b25ed780-9915-4213-976d-5b0baff8b79b",
         "type": "block_code",
         "value": "<dict>.update(<dict>)                           # Adds items. Replaces ones with matching keys.\nvalue = <dict>.pop(key)                         # Removes item or raises KeyError if missing.\n{k for k, v in <dict>.items() if v == value}    # Returns set of keys that point to the value.\n{k: v for k, v in <dict>.items() if k in keys}  # Filters the dictionary by keys."
       }
     ],
     "sub_concepts": [
       {
-        "id": "526783c7-8d69-41d2-bc33-32ea80ca41f8",
+        "id": "19087384-a333-485e-ac74-e0d7d73127d1",
         "name": "Counter",
         "value": [
           {
-            "id": "0eb8a872-231c-47bf-9596-1e51d455188d",
+            "id": "91553bc8-283e-4b28-8fd1-265f52baf7df",
             "type": "block_code",
             "value": ">>> from collections import Counter\n>>> counter = Counter(['blue', 'blue', 'blue', 'red', 'red'])\n>>> counter['yellow'] += 1\n>>> print(counter.most_common())\n[('blue', 3), ('red', 2), ('yellow', 1)]"
           }
@@ -111,48 +139,62 @@
         "description": "description not provided"
       }
     ],
-    "short_description": "short description not provided",
-    "description": "description not provided",
-    "difficulty": "easy",
+    "short_description": "Dictionaries are mutable, hash-based collections that map keys to values with average O(1) time complexity for key operations and maintain insertion order since Python 3.7.",
+    "description": "In Python, dictionaries are mutable, unordered collections of key-value pairs. They are implemented as hash tables, providing average-case time complexity of O(1) for lookup, insertion, and deletion operations. Starting with Python 3.7, dictionaries maintain the order of item insertion, which was officially guaranteed in PEP 468. This ordering is based on an internal mechanism that leverages a combination of arrays and linked lists to efficiently manage key hashing and collision resolution. Each entry in a dictionary consists of a hash table slot for quick access using hashed keys, while collisions are handled using open addressing with quadratic probing.\n\nAdvanced usage often involves leveraging dictionaries for tasks such as memoization, implementing caches or counters due to their rapid lookup capabilities. They can also be used effectively in metaprogramming contexts like decorators and context managers where dynamic mapping of functions and resources is required. Python's `collections.defaultdict` provides a subclass that allows the definition of default values, which can significantly simplify handling missing keys scenarios.\n\nPEPs relevant to dictionaries include PEP 3107 which introduced dictionary comprehension syntax and PEP 468 for insertion-order preservation. The `dict` type also supports methods like `.items()`, `.keys()`, and `.values()` that return view objects in Python 3, allowing dynamic updating of these views when the dictionary is modified.\n\nIn performance-sensitive applications, understanding how hash collisions and resizing affect dictionary operations can be crucial. Rehashing occurs when a threshold load factor is exceeded, which involves re-allocating memory and recalculating hashes for all keys, potentially impacting performance temporarily during this process. Thus, knowing how to pre-allocate dictionaries (using the `dict()` constructor with an initial size) or control their behavior through custom hash functions can be beneficial in high-performance scenarios.\n\nDictionaries are pivotal in Python's data model and serve as foundational structures for numerous standard library implementations like JSON parsing (`json` module), HTTP requests handling (`requests` library), and more. Understanding the internal workings of dictionaries, such as their resizing algorithm or how they maintain insertion order, can greatly enhance one's ability to write efficient, high-performing Python code.",
+    "difficulty": "advanced",
+    "common_pitfalls": [
+      "Overlooking the impact of poor hash functions leading to performance degradation due to increased collisions.",
+      "Failing to recognize that dictionaries do not guarantee iteration order prior to Python 3.7, which might lead to unexpected behavior in older versions.",
+      "Using mutable objects as keys can result in unpredictable behaviors and errors since these objects' hash values may change during dictionary lifetime.",
+      "Neglecting the cost of resizing operations in memory-constrained environments or when performing frequent insertions."
+    ],
+    "related_concepts": [
+      "Hash tables",
+      "PEP 468 (Insertion Order Preservation)",
+      "collections.defaultdict",
+      "Dictionary comprehension",
+      "Custom hash functions",
+      "Memoization"
+    ],
     "tags": []
   },
   {
-    "id": "63147756-6c6e-41d3-b582-10fc9b697452",
+    "id": "a182b984-e306-4f26-b535-9a5d78c19ac5",
     "name": "Set",
     "value": [
       {
-        "id": "63f7d05c-dc5f-4fe0-bff2-1cd37719734d",
+        "id": "8ab02414-4458-4938-9c8a-353ecbfa2f77",
         "type": "block_code",
         "value": "<set> = {<el_1>, <el_2>, ...}                   # Use `set()` for empty set."
       },
       {
-        "id": "e7ee77dd-400e-4e91-a429-8502a42a0660",
+        "id": "e79645a9-0032-4eac-8b94-90404bce6702",
         "type": "block_code",
         "value": "<set>.add(<el>)                                 # Or: <set> |= {<el>}\n<set>.update(<collection> [, ...])              # Or: <set> |= <set>"
       },
       {
-        "id": "a9ea3959-935a-43a0-aac5-7dd60dfb722e",
+        "id": "54978be5-e589-40af-a55b-45da836b12c2",
         "type": "block_code",
         "value": "<set>  = <set>.union(<coll.>)                   # Or: <set> | <set>\n<set>  = <set>.intersection(<coll.>)            # Or: <set> & <set>\n<set>  = <set>.difference(<coll.>)              # Or: <set> - <set>\n<set>  = <set>.symmetric_difference(<coll.>)    # Or: <set> ^ <set>\n<bool> = <set>.issubset(<coll.>)                # Or: <set> <= <set>\n<bool> = <set>.issuperset(<coll.>)              # Or: <set> >= <set>"
       },
       {
-        "id": "71366e4c-94f0-43b8-a9cc-bfc2f6377bc5",
+        "id": "3cfc67ae-c8a9-4187-bbc7-b3633a2c0261",
         "type": "block_code",
         "value": "<el> = <set>.pop()                              # Raises KeyError if empty.\n<set>.remove(<el>)                              # Raises KeyError if missing.\n<set>.discard(<el>)                             # Doesn't raise an error."
       }
     ],
     "sub_concepts": [
       {
-        "id": "b6e09a98-08e0-42ea-82fb-a0796022fe82",
+        "id": "5e96f735-b174-46f6-8d74-f2e9d658fdf7",
         "name": "Frozen Set",
         "value": [
           {
-            "id": "4eadad54-c791-424d-a624-110326a5269d",
+            "id": "431f269d-3df4-428d-847d-0b181fe77b40",
             "type": "list",
             "value": "<li><strong>Is immutable and hashable.</strong></li>\n<li><strong>That means it can be used as a key in a dictionary or as an element in a set.</strong></li>"
           },
           {
-            "id": "83e07fbe-1bc3-4456-96a8-80ab68983e4f",
+            "id": "b04f98a6-a225-41d7-b0ca-af971ce5ca61",
             "type": "block_code",
             "value": "<frozenset> = frozenset(<collection>)"
           }
@@ -161,38 +203,50 @@
         "description": "description not provided"
       }
     ],
-    "short_description": "short description not provided",
-    "description": "description not provided",
-    "difficulty": "easy",
+    "short_description": "A set is an unordered collection of unique elements, optimized for fast membership tests and supporting mathematical set operations.",
+    "description": "In Python, a `set` is an unordered collection of unique elements. It is mutable, allowing for dynamic updates such as adding or removing items. Sets are implemented using hash tables, which provide average-case constant time complexity O(1) for lookups, insertions, and deletions. This makes sets highly efficient for operations involving membership tests and deduplication.\n\nSets support a variety of mathematical set operations like union, intersection, difference, and symmetric difference. These operations are implemented efficiently due to the underlying hash table structure. For example, the union operation combines elements from two sets without duplicates, while intersection finds common elements between sets.\n\nIn Python 3.9 and later, the `|` operator can be used for set union and `-` for set difference, providing a more intuitive syntax compared to the traditional methods like `union()` or `difference()`. The introduction of these operators aligns with PEP 572, which aimed to enhance readability.\n\nSets are particularly useful in scenarios requiring uniqueness constraints or where operations on collections need to be optimized. For instance, they are commonly used for filtering duplicates from a list or checking the presence of an item efficiently. However, sets do not maintain order and cannot contain mutable elements like lists or other sets.\n\nFrom an advanced perspective, understanding how Python implements sets can provide insights into performance optimizations. The use of hash tables means that while average-case operations are O(1), worst-case scenarios (e.g., many hash collisions) could degrade to O(n). This is why choosing the right data structure for a task based on its characteristics and requirements is crucial.\n\nSets also support advanced features like set comprehensions, which allow for concise construction of sets with specific conditions. For example, `{x**2 for x in range(10) if x % 2 == 0}` creates a set of squares of even numbers from 0 to 9.\n\nIn summary, Python's `set` is a powerful tool for handling unique collections with efficient operations, crucial for performance-critical applications. However, its unordered nature and restriction against mutable elements require careful consideration in design choices.",
+    "difficulty": "intermediate",
+    "common_pitfalls": [
+      "Attempting to use unhashable (mutable) types like lists or dictionaries as set elements.",
+      "Assuming sets maintain insertion order, which can lead to unexpected behavior in certain applications.",
+      "Overlooking the potential for hash collisions that could degrade performance."
+    ],
+    "related_concepts": [
+      "Dictionary",
+      "List comprehension",
+      "Hashing and hash tables",
+      "Mutable vs Immutable types",
+      "Set operations (union, intersection, etc.)"
+    ],
     "tags": []
   },
   {
-    "id": "59caec67-ba76-4a31-9449-6638b858b50e",
+    "id": "8af20375-bd8d-4aa6-a448-b3b26deedbc2",
     "name": "Tuple",
     "value": [
       {
-        "id": "e7bc4094-aef8-4048-b18d-c94bef0e5a25",
+        "id": "4d88142b-3aa3-4c98-ad0d-a64c5cd66dca",
         "type": "paragraph",
         "value": "<strong>Tuple is an immutable and hashable list.</strong>"
       },
       {
-        "id": "5883f83c-4a8d-4f24-99be-49d77d39aa7a",
+        "id": "d24d668c-e7df-44ce-91d3-78e852a44fc1",
         "type": "block_code",
         "value": "<tuple> = ()                               # Empty tuple.\n<tuple> = (<el>,)                          # Or: <el>,\n<tuple> = (<el_1>, <el_2> [, ...])         # Or: <el_1>, <el_2> [, ...]"
       }
     ],
     "sub_concepts": [
       {
-        "id": "23730bf5-0866-46a5-bca8-d28d36c229e9",
+        "id": "6b3ef821-2b7c-47bf-aedd-f92987f12c8c",
         "name": "Named Tuple",
         "value": [
           {
-            "id": "616bd380-ae82-4520-aacb-ba841ba9a30c",
+            "id": "2487f9dd-b0d9-4145-b30f-db80157381d1",
             "type": "paragraph",
             "value": "<strong>Tuple's subclass with named elements.</strong>"
           },
           {
-            "id": "527b11bc-7320-4807-9a06-fe5772f206a4",
+            "id": "3b7d6a21-fbd5-4856-9fce-b9bf8ed50676",
             "type": "block_code",
             "value": ">>> from collections import namedtuple\n>>> Point = namedtuple('Point', 'x y')\n>>> p = Point(1, y=2)\n>>> print(p)\nPoint(x=1, y=2)\n>>> p[0], p.x\n(1, 1)"
           }
@@ -201,90 +255,134 @@
         "description": "description not provided"
       }
     ],
-    "short_description": "short description not provided",
-    "description": "description not provided",
-    "difficulty": "easy",
+    "short_description": "A tuple is an immutable sequence type optimized for fixed collections of items, enabling efficient memory usage and supporting multiple return values from functions.",
+    "description": "In Python, a tuple is an immutable sequence type that can hold a collection of items. Tuples are defined by enclosing the values in parentheses `()`, separated by commas. Unlike lists, which are mutable, tuples cannot be changed once created; this immutability provides several advantages, such as allowing them to be used as keys in dictionaries and elements in sets, unlike lists.\n\nTuples are optimized for performance compared to lists due to their immutable nature. They consume less memory than lists because they do not need additional space to handle element changes. The underlying C implementation of tuples is more efficient when dealing with fixed collections of items, which also makes them ideal for use as records or data that should remain constant throughout the program's execution.\n\nTuples support all sequence operations like indexing and slicing, but since they are immutable, methods like `append`, `extend`, or `pop` are not applicable. Instead, functions such as `len()` can be used to get the tuple length, while concatenation can create new tuples using the `+` operator.\n\nFrom an advanced perspective, understanding how tuples work with Python's memory management and garbage collection is crucial. Tuples' immutability means they are hashable; thus, Python stores them efficiently in memory, reusing instances of identical tuples to save space (interning). This behavior can have significant performance implications, especially when working with large datasets or frequently accessed values.\n\nTuples also play a critical role in multiple return values from functions and unpacking sequences. By returning tuples, functions can provide multiple outputs simultaneously, which are then easily unpacked into variables using the assignment syntax. The `*` operator introduced in PEP 448 allows for extended iterable unpacking, where it can capture additional items as part of a tuple during assignments.\n\nFurthermore, tuples can be used effectively with advanced Python features like decorators and context managers to manage resources or maintain state across function calls without side effects. Understanding these mechanisms offers developers flexibility and power in structuring their applications efficiently.",
+    "difficulty": "advanced",
+    "common_pitfalls": [
+      "Attempting to modify a tuple after its creation raises a TypeError.",
+      "Overlooking the fact that tuples are hashable while lists are not, leading to errors when using tuples as dictionary keys or set elements.",
+      "Forgetting that Python uses tuple interning for small integers and short strings; thus, identical tuples can point to the same memory location, which may not be apparent in terms of performance.",
+      "Misunderstanding the behavior of extended iterable unpacking, particularly with `*` used in assignment."
+    ],
+    "related_concepts": [
+      "List",
+      "Immutable types",
+      "Sequence operations",
+      "Memory management",
+      "Garbage collection",
+      "Unpacking",
+      "Multiple return values",
+      "Hashable objects"
+    ],
     "tags": []
   },
   {
-    "id": "7395be70-c3bc-412c-9800-c23a0b298e6f",
+    "id": "f8194220-0542-4dc3-b87a-c118823bf9e3",
     "name": "Range",
     "value": [
       {
-        "id": "b99974e8-9e2d-4e83-96ea-dc8c148db420",
+        "id": "8f267463-5c9f-4b65-8363-d64b58cf157f",
         "type": "paragraph",
         "value": "<strong>Immutable and hashable sequence of integers.</strong>"
       },
       {
-        "id": "a45eaca9-69f0-49da-af1f-a9542b2a0b32",
+        "id": "3aae8ac0-55b6-4a7d-a38e-0b745a5de94d",
         "type": "block_code",
         "value": "<range> = range(stop)                      # I.e. range(to_exclusive).\n<range> = range(start, stop)               # I.e. range(from_inclusive, to_exclusive).\n<range> = range(start, stop, \u00b1step)        # I.e. range(from_inclusive, to_exclusive, \u00b1step)."
       },
       {
-        "id": "9c5918c8-e5ac-435c-b1b9-1ab21cb59f50",
+        "id": "e45d1788-ebad-4f11-88bf-48733533aad7",
         "type": "block_code",
         "value": ">>> [i for i in range(3)]\n[0, 1, 2]"
       }
     ],
     "sub_concepts": [],
-    "short_description": "short description not provided",
-    "description": "description not provided",
-    "difficulty": "easy",
+    "short_description": "`range()` generates an immutable sequence of numbers used for iteration, optimized for memory efficiency by computing values on-the-fly.",
+    "description": "The `range()` function in Python is a versatile tool that generates a sequence of numbers. It is commonly used for iteration in loops, particularly `for` loops. Unlike lists, `range()` returns an immutable sequence type, which means it doesn't store all the numbers in memory at once but rather computes each number on-the-fly as needed. This lazy evaluation makes `range()` highly efficient when dealing with large sequences, as it significantly reduces memory usage compared to generating a list of numbers.\n\nIntroduced in Python 2.0 and refined over subsequent versions, `range()` supports three arguments: start, stop, and step, where 'start' is the beginning value (inclusive), 'stop' is the ending value (exclusive), and 'step' defines the increment between each number in the sequence. The function's signature is `range([start], stop[, step])`. If only one argument is provided, it is treated as the 'stop' value with a default start of 0 and a step of 1.\n\nAdvanced usage of `range()` often involves its interaction with other iterable types and functions. For instance, when combined with list comprehensions or generator expressions, `range()` can be used to create complex sequences efficiently. Additionally, the introduction of Python 3's `range()` as an immutable sequence type aligns it closely with `xrange()` from Python 2, which was a memory-efficient iterator. This change reflects Python's ongoing commitment to improving performance and resource management.\n\nIn terms of performance implications, using `range()` is generally more efficient than creating lists for iteration due to its lazy evaluation. This efficiency becomes particularly important in data-intensive applications or when working with large datasets where memory constraints are a concern. Furthermore, the integration of `range()` with Python's iterator protocol allows it to be used seamlessly with other iterable-based functions like `zip()`, `map()`, and `filter()`, enhancing its utility in functional programming paradigms.\n\nThe concept of `range()` is also closely tied to PEP 255, which introduced generator functions and expressions, providing a foundation for lazy evaluation patterns in Python. While `range()` itself is not a generator, its design philosophy shares similarities with the lazy evaluation approach that generators embody.\n\nIn summary, `range()` is an essential tool for generating number sequences efficiently in Python, particularly beneficial for iterating over large ranges without consuming significant memory resources. Its design and functionality make it a cornerstone of efficient looping constructs in both simple scripts and complex applications.",
+    "difficulty": "intermediate",
+    "common_pitfalls": [
+      "Forgetting that `range()` excludes the stop value, leading to off-by-one errors.",
+      "Using `range()` with non-integer step sizes or types other than integers, which raises a TypeError.",
+      "Attempting to modify a `range` object directly since it is immutable.",
+      "Overlooking performance benefits by substituting `range()` with list comprehensions for large sequences."
+    ],
+    "related_concepts": [
+      "List Comprehensions",
+      "Generator Expressions",
+      "Iterators",
+      "Iterator Protocol",
+      "Memory Management in Python",
+      "Functional Programming Constructs"
+    ],
     "tags": []
   },
   {
-    "id": "6e44d367-09dd-4f53-b83e-690fd35a1d12",
+    "id": "cb836710-749e-4442-bb62-fec95f4099dd",
     "name": "Enumerate",
     "value": [
       {
-        "id": "5242e35f-ab3a-4be2-bd4b-f638a3a3fb52",
+        "id": "d8104612-3f52-43cc-8e41-22811da5dba8",
         "type": "block_code",
         "value": "for i, el in enumerate(<coll>, start=0):   # Returns next element and its index on each pass.\n    ..."
       }
     ],
     "sub_concepts": [],
-    "short_description": "short description not provided",
-    "description": "description not provided",
-    "difficulty": "easy",
+    "short_description": "`enumerate()` adds a counter to any iterable and returns it as an enumerate object, facilitating the retrieval of both indices and values during loops.",
+    "description": "The `enumerate()` function in Python is a built-in utility that transforms any iterable into an iterator of tuples, where each tuple contains the index of the item and the item itself. This function simplifies the process of looping over both the indices and elements of an iterable, which is particularly useful when you need to track element positions during iteration. The signature of `enumerate()` is: `enumerate(iterable, start=0)`. Here, `iterable` is any object capable of returning its members one at a time (e.g., list, string), and `start` specifies the starting index for the enumeration.\n\nInternally, `enumerate()` leverages Python's iterator protocol. It yields tuples `(index, element)` by maintaining an internal state of both the current position in the iterable and the value obtained from calling the `__next__()` method on it. This mechanism ensures that each call to `next()` on the resulting enumerate object provides a tuple with the next index and corresponding element, incrementing the index appropriately.\n\nAdvanced use cases include integrating with list comprehensions or generator expressions for complex data transformations where indexed operations are necessary. Moreover, when combined with unpacking in loops (`for i, value in enumerate(iterable)`), it elegantly sidesteps common pitfalls like manually managing an index variable.\n\nPerformance implications of using `enumerate()` over manual indexing (e.g., using a range-based loop) are minimal for most cases since the function itself is highly optimized. However, `enumerate()` can be particularly advantageous when working with large datasets or within functions where maintaining code readability and reducing cognitive load are paramount.\n\nIn terms of relevant Python Enhancement Proposals (PEPs), while there isn't one specifically dedicated to `enumerate()`, PEP 3102 introduced iterable unpacking in for-loops, which complements the use of `enumerate()` by simplifying syntax and improving clarity. Additionally, PEP 484 discusses type hints, which can be applied when using `enumerate()` with more complex iterables to ensure better static analysis.\n\nOverall, `enumerate()` is an elegant solution provided by Python to handle indexed iteration without resorting to less efficient or error-prone manual index tracking.",
+    "difficulty": "Intermediate",
+    "common_pitfalls": [
+      "Forgetting that `enumerate()` produces a new iterator; each call will recompute results unless explicitly stored.",
+      "Overlooking that the starting index defaults to 0; failing to specify it when a different start is needed can lead to off-by-one errors.",
+      "Confusing `enumerate()` with functions like `zip()`, which serve different purposes in handling multiple iterables.",
+      "Neglecting the potential of combining `enumerate()` with slicing, unpacking, and other iterable operations for more complex data manipulation."
+    ],
+    "related_concepts": [
+      "Iterator Protocol",
+      "List Comprehensions",
+      "Generator Expressions",
+      "Unpacking in Loops",
+      "Slicing",
+      "zip()"
+    ],
     "tags": []
   },
   {
-    "id": "9e876264-7ca3-44c6-a97c-1641ade5ee8f",
+    "id": "635d3297-10f9-4c48-8ce4-774dc34d4ee7",
     "name": "Iterator",
     "value": [
       {
-        "id": "2078daec-3c90-41f9-82d1-8c51149dd382",
+        "id": "e58e5c88-5984-40a2-adfc-872863a6c6f9",
         "type": "paragraph",
         "value": "<strong>Potentially endless stream of elements.</strong>"
       },
       {
-        "id": "f797eaec-b9d9-4f6a-810d-9893af0dd67f",
+        "id": "104379f2-9ed4-46ec-bfe7-a0c7bd758b4a",
         "type": "block_code",
         "value": "<iter> = iter(<collection>)                # `iter(<iter>)` returns unmodified iterator.\n<iter> = iter(<function>, to_exclusive)    # A sequence of return values until 'to_exclusive'.\n<el>   = next(<iter> [, default])          # Raises StopIteration or returns 'default' on end.\n<list> = list(<iter>)                      # Returns a list of iterator's remaining elements."
       }
     ],
     "sub_concepts": [
       {
-        "id": "2ad644de-db94-42bc-8ba5-8e9af6ff8587",
+        "id": "1d0cef81-6b7b-403c-b0e8-cca2ebaf8bc3",
         "name": "Itertools",
         "value": [
           {
-            "id": "80674af1-b182-43d6-8c66-27f8cfc8791c",
+            "id": "2b49b65e-db34-4140-b8aa-901d10666c37",
             "type": "block_code",
             "value": "import itertools as it"
           },
           {
-            "id": "b456ff50-016d-4722-991b-6dd8e514725c",
+            "id": "7d4a1b6d-c18f-41b8-9f7b-7464f7c83578",
             "type": "block_code",
             "value": "<iter> = it.count(start=0, step=1)         # Returns updated value endlessly. Accepts floats.\n<iter> = it.repeat(<el> [, times])         # Returns element endlessly or 'times' times.\n<iter> = it.cycle(<collection>)            # Repeats the sequence endlessly."
           },
           {
-            "id": "99314d9d-e628-4899-8562-a33f29fe6d3c",
+            "id": "d57c3df0-e8d0-4be5-8013-1451763dae95",
             "type": "block_code",
             "value": "<iter> = it.chain(<coll>, <coll> [, ...])  # Empties collections in order (figuratively).\n<iter> = it.chain.from_iterable(<coll>)    # Empties collections inside a collection in order."
           },
           {
-            "id": "23ef8c31-a449-4e84-9299-f68d48ba10de",
+            "id": "04326cbe-9a74-4f11-8210-a613e5ca045c",
             "type": "block_code",
             "value": "<iter> = it.islice(<coll>, to_exclusive)   # Only returns first 'to_exclusive' elements.\n<iter> = it.islice(<coll>, from_inc, \u2026)    # `to_exclusive, +step_size`. Indices can be None."
           }
@@ -293,105 +391,63 @@
         "description": "description not provided"
       }
     ],
-    "short_description": "short description not provided",
-    "description": "description not provided",
-    "difficulty": "easy",
+    "short_description": "An iterator is an object adhering to the iterator protocol, enabling efficient element-by-element traversal of collections in Python through lazy evaluation.",
+    "description": "In Python, an iterator is a fundamental construct that allows for iterating over elements of a container or sequence in a memory-efficient manner. Iterators adhere to the iterator protocol, which consists of two essential methods: `__iter__()` and `__next__()`. The `__iter__()` method returns the iterator object itself, enabling it to be used with constructs like loops (e.g., `for` loops). The `__next__()` method retrieves the next element in the sequence, raising a `StopIteration` exception when no further elements are available. This design allows for lazy evaluation of sequences, meaning elements are computed on-demand rather than stored in memory all at once.\n\nPython's iterators enable efficient data processing with minimal memory overhead, making them ideal for working with large datasets or infinite streams. The underlying mechanism leverages the object-oriented nature of Python, encapsulating state and control flow within iterator objects. This is particularly powerful when combined with generator functions (which yield values one at a time) to produce custom iterable sequences without precomputing an entire dataset.\n\nPerformance-wise, iterators can significantly reduce memory usage compared to list comprehensions or equivalent constructs that generate full lists in memory. For example, using generators or the `itertools` module's iterator-producing functions allows for creating complex pipelines of data transformations with minimal resource consumption. Advanced users leverage iterators to create custom iterable objects by implementing the iterator protocol, enabling integration with Python\u2019s built-in iteration tools.\n\nCommon advanced use cases include customizing data traversal and processing workflows using generators, integrating with asynchronous programming patterns via `async` iterators (introduced in PEP 492), and employing `__iter__()` for classes to make them iterable. In addition, the iterator protocol is crucial for understanding how Python's iteration mechanics work under the hood, such as in comprehensions, unpacking operations, and functions like `zip()`, `map()`, and `filter()`. The use of iterators aligns well with functional programming paradigms embraced by advanced Python developers.\n\nRelevant PEPs include PEP 255 which introduced generators, providing a straightforward way to implement the iterator protocol, and PEP 492 for asynchronous iteration. These enhancements allow developers to write cleaner, more efficient code that can handle complex data processing tasks with ease.",
+    "difficulty": "advanced",
+    "common_pitfalls": [
+      "Forgetting that `__next__()` raises a StopIteration exception when there are no more elements, leading to runtime errors if not handled properly.",
+      "Confusing iterators with iterables; while all iterators are iterables, not all iterables are iterators as some can be traversed multiple times (e.g., lists).",
+      "Overlooking the memory benefits of using iterators in contexts where large datasets or infinite sequences are involved.",
+      "Misunderstanding how to reset an iterator, since they cannot be reused once exhausted; a new iterator must be created for another pass."
+    ],
+    "related_concepts": [
+      "Generator",
+      "Iterable",
+      "Comprehensions",
+      "Asynchronous Iterators (async generators)",
+      "PEP 255",
+      "PEP 492"
+    ],
     "tags": []
   },
   {
-    "id": "3845bf48-651a-4db8-ac18-19223c4eb90b",
+    "id": "04ec7834-bc72-4bca-8613-901874e2f368",
     "name": "Generator",
     "value": [
       {
-        "id": "4916d240-c467-41cc-8583-d22fa03fa0f3",
+        "id": "4669cd74-565e-40be-ae30-82512c8f8a1d",
         "type": "list",
         "value": "<li><strong>Any function that contains a yield statement returns a generator.</strong></li>\n<li><strong>Generators and iterators are interchangeable.</strong></li>"
       },
       {
-        "id": "55c9a29a-49ac-4fcb-8231-e4bb2e6f88de",
+        "id": "fd199e1a-d1c5-4563-8216-dc9a01462597",
         "type": "block_code",
         "value": "def count(start, step):\n    while True:\n        yield start\n        start += step"
       },
       {
-        "id": "4e108b7b-d73d-41bb-a6e6-d224ba246d4f",
+        "id": "9a87a407-c1de-4263-9787-34fcfa4ca913",
         "type": "block_code",
         "value": ">>> counter = count(10, 2)\n>>> next(counter), next(counter), next(counter)\n(10, 12, 14)"
       }
     ],
     "sub_concepts": [],
-    "short_description": "short description not provided",
-    "description": "description not provided",
-    "difficulty": "easy",
-    "tags": []
-  },
-  {
-    "id": "afa82418-9059-4ad5-9e9e-526a411994b4",
-    "name": "Type",
-    "value": [
-      {
-        "id": "3fc401fa-5e66-4f10-b7e2-efbcefb4cdda",
-        "type": "list",
-        "value": "<li><strong>Everything is an object.</strong></li>\n<li><strong>Every object has a type.</strong></li>\n<li><strong>Type and class are synonymous.</strong></li>"
-      },
-      {
-        "id": "4a8d7564-c0d5-44ef-ad35-a5dab633668d",
-        "type": "block_code",
-        "value": "<type> = type(<el>)                          # Or: <el>.__class__\n<bool> = isinstance(<el>, <type>)            # Or: issubclass(type(<el>), <type>)"
-      },
-      {
-        "id": "34ffd8de-6b8a-43d8-8707-446b0508721c",
-        "type": "block_code",
-        "value": ">>> type('a'), 'a'.__class__, str\n(<class 'str'>, <class 'str'>, <class 'str'>)"
-      },
-      {
-        "id": "ae2e2555-eba1-42a2-b348-6df704f16c99",
-        "type": "heading",
-        "value": "Some types do not have built-in names, so they must be imported:"
-      },
-      {
-        "id": "36a2eea4-b67e-4263-a25e-14df8c228945",
-        "type": "block_code",
-        "value": "from types import FunctionType, MethodType, LambdaType, GeneratorType, ModuleType"
-      }
+    "short_description": "Generators provide an efficient way to iterate over data without storing it all in memory, using `yield` for lazy evaluation.",
+    "description": "Generators in Python are a sophisticated tool for creating iterators in a memory-efficient manner. They allow developers to iterate over sequences of data without the need to store the entire sequence in memory, which is particularly advantageous when working with large datasets or streams of data. A generator function is defined like a regular function but uses the `yield` statement instead of `return`. When called, it returns an iterator that can be iterated upon (e.g., using a for loop). Each call to `next()` on this iterator resumes execution of the generator function until another `yield` is encountered. This behavior adheres to the iterator protocol, which requires implementing `__iter__()` and `__next__()`, but generators abstract these details away from the user.\n\nGenerators are an implementation of the iterator protocol with a few key benefits: they automatically keep track of their internal state, only produce one value at a time (hence being lazily evaluated), and free up resources once exhausted. The use of `yield` allows for values to be generated on-the-fly, which can significantly reduce memory overhead when compared to building and storing lists or other iterable objects in memory.\n\nPerformance-wise, generators are optimal for large datasets due to their lazy evaluation; they compute one element at a time, thus reducing initial load times and memory usage. They're especially useful in pipeline processing where each step feeds into the next without requiring intermediate storage of entire sequences.\n\nAdvanced use cases include generating infinite sequences, creating co-routines using `yield from`, which simplifies generator delegation by yielding all values from another generator or iterable. In terms of performance implications, while generators save memory, they can sometimes introduce overhead due to function calls and state maintenance. However, for I/O bound tasks and when processing streams of data, the trade-off is often worthwhile.\n\nGenerators are also central to asynchronous programming in Python, especially with `asyncio`, where coroutines behave much like generator functions but are designed to be non-blocking. Understanding generators is crucial when working on any form of lazy evaluation or stream processing in Python, and their design is a powerful example of the language's support for functional programming patterns.\n\nSeveral PEPs have been introduced that impact generator functionality, such as PEP 342 which formalized generator expressions akin to list comprehensions but returning generators instead. Another related concept is PEP 525 on coroutine-related syntax like `async` and `await`, which evolved from generators' capabilities.",
+    "difficulty": "advanced",
+    "common_pitfalls": [
+      "Confusing generator functions with regular functions due to similar syntax but different execution (lazily evaluated).",
+      "Attempting to reuse a generator after exhaustion without reinitializing, as generators are single-use objects.",
+      "Forgetting that `yield` expressions can be used for sending values back into the generator via the `.send()` method.",
+      "Overlooking that a `return` statement in a generator function will raise a `StopIteration` exception with the return value."
     ],
-    "sub_concepts": [
-      {
-        "id": "141aeddb-bb0e-4071-a353-401840593edb",
-        "name": "Abstract Base Classes",
-        "value": [
-          {
-            "id": "df24e638-f6f2-48c4-9eda-bb96a5669bc8",
-            "type": "paragraph",
-            "value": "<strong>Each abstract base class specifies a set of virtual subclasses. These classes are then recognized by isinstance() and issubclass() as subclasses of the ABC, although they are really not. ABC can also manually decide whether or not a specific class is its virtual subclass, usually based on which methods the class has implemented. For instance, Iterable ABC looks for method iter(), while Collection ABC looks for iter(), contains() and len().</strong>"
-          },
-          {
-            "id": "e5c0f6ca-a4cf-4b7d-ad36-05d6dfcbf23f",
-            "type": "block_code",
-            "value": ">>> from collections.abc import Iterable, Collection, Sequence\n>>> isinstance([1, 2, 3], Iterable)\nTrue"
-          },
-          {
-            "id": "6ef3fff8-e8d6-4513-8fde-8e1492c36662",
-            "type": "block_code",
-            "value": "+------------------+------------+------------+------------+\n|                  |  Iterable  | Collection |  Sequence  |\n+------------------+------------+------------+------------+\n| list, range, str |    yes     |    yes     |    yes     |\n| dict, set        |    yes     |    yes     |            |\n| iter             |    yes     |            |            |\n+------------------+------------+------------+------------+"
-          },
-          {
-            "id": "c80c376b-bebe-4ed6-8bb1-c5c7d241c44d",
-            "type": "block_code",
-            "value": ">>> from numbers import Number, Complex, Real, Rational, Integral\n>>> isinstance(123, Number)\nTrue"
-          },
-          {
-            "id": "fccadb4a-79e4-4145-a03f-aacd8b0d6241",
-            "type": "block_code",
-            "value": "+--------------------+----------+----------+----------+----------+----------+\n|                    |  Number  |  Complex |   Real   | Rational | Integral |\n+--------------------+----------+----------+----------+----------+----------+\n| int                |   yes    |   yes    |   yes    |   yes    |   yes    |\n| fractions.Fraction |   yes    |   yes    |   yes    |   yes    |          |\n| float              |   yes    |   yes    |   yes    |          |          |\n| complex            |   yes    |   yes    |          |          |          |\n| decimal.Decimal    |   yes    |          |          |          |          |\n+--------------------+----------+----------+----------+----------+----------+"
-          }
-        ],
-        "short_description": "short description not provided",
-        "description": "description not provided"
-      }
+    "related_concepts": [
+      "Iterator Protocol",
+      "Generator Expressions",
+      "Yield From (Delegation)",
+      "Coroutine and Asyncio",
+      "Lazy Evaluation",
+      "Iterable Objects"
     ],
-    "short_description": "short description not provided",
-    "description": "description not provided",
-    "difficulty": "easy",
     "tags": []
   }
 ]

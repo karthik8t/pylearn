@@ -8,13 +8,13 @@ import {useNavigate} from "react-router-dom";
 import ScrollContainer from "renderer/components/common/scroll-container";
 import HeroBreadcrumb from "renderer/components/common/hero-breadcrumb";
 
-type ConceptType = 'Beginner' | 'Intermediate' | 'Advanced' | 'All' | 'Unlearned' | 'Bookmarks'
-const conceptTypes: ConceptType[] = ['Beginner', 'Intermediate', 'Advanced', 'All', 'Unlearned', 'Bookmarks']
+type ConceptType = 'Beginner' | 'Intermediate' | 'Advanced'
+const conceptTypes: ConceptType[] = ['Beginner', 'Intermediate', 'Advanced']
 
 const Concepts = () => {
   const navigate = useNavigate();
   const [concepts, setConcepts] = useState<Concept[]>([])
-  const [conceptType, setConceptType] = useState<ConceptType>('All')
+  const [conceptType, setConceptType] = useState<ConceptType | undefined>(undefined)
   const [expandedConcept, setExpandedConcept] = useState<Concept | undefined>(undefined)
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const Concepts = () => {
                   key={type}
                   variant={type === conceptType ? "default" : "secondary"}
                   className={`rounded-3xl`}
-                  onClick={() => setConceptType(type)}
+                  onClick={() => setConceptType(prevState => prevState === type ? undefined : type)}
                 >
                   {type}
                 </Button>
@@ -53,7 +53,9 @@ const Concepts = () => {
           }
         </div>
         {
-          concepts.map(concept => {
+          concepts
+            .filter(c => conceptType != undefined ? c.difficulty.toLowerCase() === conceptType.toLowerCase() : true)
+            .map(concept => {
             return (
               <div id={"concept-container"}>
                 <Card key={concept.id}
