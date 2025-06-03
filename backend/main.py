@@ -54,6 +54,8 @@ def extract_content_map(ast):
     for item in ast:
         logger.info(f'processing item index: {item["type"]}')
         if item.get('attrs', {}).get('level') == 2:
+            if item['children'][0].get('raw') in ['Contents']:
+                continue
             if sub_heading is not None:
                 concept.sub_concepts.append(sub_concept)
                 sub_heading = None
