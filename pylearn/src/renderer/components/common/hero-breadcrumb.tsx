@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,12 +14,12 @@ const HeroBreadcrumb = (props: { path: { link: string, name: string, state?: any
     <BreadcrumbList>
       {path.map((item, index) => {
         return (
-          <>
+          <Fragment key={index}>
             <BreadcrumbItem>
               <Link to={item.link} state={item.state ?? {}}>{item.name.toWellFormed()}</Link>
             </BreadcrumbItem>
             <BreadcrumbSeparator/>
-          </>
+          </Fragment>
         )
       })}
       <BreadcrumbItem>

@@ -1,7 +1,7 @@
-import type { BrowserWindow, IpcMainInvokeEvent } from 'electron'
-import { z } from 'zod';
+import type {BrowserWindow, IpcMainInvokeEvent} from 'electron'
+import {z} from 'zod';
 
-import type { registerRoute } from 'lib/electron-router-dom'
+import type {registerRoute} from 'lib/electron-router-dom'
 
 export type BrowserWindowOrNull = Electron.BrowserWindow | null
 
@@ -77,3 +77,12 @@ export const ConceptSchema = z.object({
 });
 
 export type Concept = z.infer<typeof ConceptSchema>;
+
+export const ProgressSchema = z.object({
+  conceptId: z.string(),
+  read: z.boolean().default(false),
+  read_on: z.date().optional(),
+  bookmarked: z.boolean().default(false),
+});
+
+export type Progress = z.infer<typeof ProgressSchema>;

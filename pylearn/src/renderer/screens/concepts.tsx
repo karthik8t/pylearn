@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Concept, SubConcept} from "shared/types";
+import {Concept, Progress, SubConcept} from "shared/types";
 import {ScrollArea, ScrollBar} from "renderer/components/ui/scroll-area";
 import {Button} from "renderer/components/ui/button";
 import {Card, CardContent, CardFooter, CardHeader} from "renderer/components/ui/card";
@@ -16,11 +16,17 @@ const Concepts = () => {
   const [concepts, setConcepts] = useState<Concept[]>([])
   const [conceptType, setConceptType] = useState<ConceptType | undefined>(undefined)
   const [expandedConcept, setExpandedConcept] = useState<Concept | undefined>(undefined)
+  const [progress, setProgress] = useState<Progress[]>([])
+  const [progressMap, setProgressMap] = useState<Map<string, Progress>>(new Map())
 
   useEffect(() => {
     const invokeConceptInitChannel = async () => {
       const concepts: Concept[] = await window.App.initData()
       return concepts
+    }
+    const getUserProgress = async () => {
+      const userProgress: Progress[] = await window.App.getUserProgress()
+      return userProgress
     }
     invokeConceptInitChannel()
       .then(concepts => {
@@ -29,7 +35,66 @@ const Concepts = () => {
       .catch(err => {
         console.log(err)
       })
+    getUserProgress().then(progress => {
+      setProgress(progress)
+      const progressMap = new Map<string, Progress>()
+      progress.forEach(p => {
+        progressMap.set(p.conceptId, p)
+      })
+      setProgressMap(progressMap)
+    })
   }, []);
+
+  useEffect(() => {
+    window.App.updateUserProgress(progressMap.values().toArray())
+  }, [progressMap]);
+
+  const markAsRead = (concept: Concept) => {
+    const existingProgress = progress.find(p => p.conceptId === concept.id);
+    if (existingProgress) {
+      existingProgress.read = true;
+      existingProgress.read_on = new Date();
+      setProgress(prevState => prevState.map(p => p.conceptId === concept.id ? existingProgress : p));
+      setProgressMap(prevState => new Map(prevState).set(concept.id, existingProgress));
+    } else {
+      const newProgress: Progress = {
+        conceptId: concept.id,
+        read: true,
+        read_on: new Date(),
+        bookmarked: false,
+      };
+      setProgress(prevState => [...prevState, newProgress]);
+      setProgressMap(prevState => new Map(prevState).set(concept.id, newProgress));
+    }
+  }
+
+  const markAsUnread = (concept: Concept) => {
+    const existingProgress = progress.find(p => p.conceptId === concept.id);
+    if (existingProgress) {
+      existingProgress.read = false;
+      existingProgress.read_on = undefined;
+      setProgress(prevState => prevState.map(p => p.conceptId === concept.id ? existingProgress : p));
+      setProgressMap(prevState => new Map(prevState).set(concept.id, existingProgress));
+    }
+  }
+
+  const bookmarkConcept = (concept: Concept) => {
+    const existingProgress = progress.find(p => p.conceptId === concept.id);
+    if (existingProgress) {
+      existingProgress.bookmarked = !existingProgress.bookmarked;
+      setProgress(prevState => prevState.map(p => p.conceptId === concept.id ? existingProgress : p));
+      setProgressMap(prevState => new Map(prevState).set(concept.id, existingProgress));
+    } else {
+      const newProgress: Progress = {
+        conceptId: concept.id,
+        read: false,
+        read_on: undefined,
+        bookmarked: true,
+      };
+      setProgress(prevState => [...prevState, newProgress]);
+      setProgressMap(prevState => new Map(prevState).set(concept.id, newProgress));
+    }
+  }
 
   return (
     <ScrollContainer>
@@ -57,19 +122,33 @@ const Concepts = () => {
             .filter(c => conceptType != undefined ? c.difficulty.toLowerCase() === conceptType.toLowerCase() : true)
             .map(concept => {
             return (
-              <div id={"concept-container"}>
+              <div key={concept.id} id={"concept-container"}>
                 <Card key={concept.id}
                       onDoubleClick={() => navigate("/concept", {state: concept})}
                       className={"flex flex-row h-[250px] border-1 border-gray-200 rounded-3xl shadow-none"}>
-                  <CardContent>
+                  <CardContent className={"flex flex-col"}>
                     <h1 className={"font-bold"}>{concept.name}</h1>
                     <p className={"text-gray-500 mb-6"}>{concept.short_description}</p>
+                    <div className={"flex gap-4 mt-auto pb-4"}>
+                      {
+                        progressMap.has(concept.id) && progressMap.get(concept.id)?.read ? (
+                          <Button variant={"default"} className={"hover:bg-destructive hover:text-white"}
+                                  onClick={() => markAsUnread(concept)}>Mark as Unread</Button>
+                        ) : (
+                          <Button variant={"default"} onClick={() => markAsRead(concept)}>Mark as Read</Button>
+                        )
+                      }
+                      <Button variant={"ghost"}
+                              onClick={() => bookmarkConcept(concept)}>{progressMap.has(concept.id) && progressMap.get(concept.id)?.bookmarked ? "Remove Bookmark" : "Bookmark"}</Button>
+                    </div>
                     <Button
                       variant={"outline"}
                       disabled={concept.sub_concepts.length === 0}
                       onClick={() => setExpandedConcept(prevState => prevState?.id === concept.id ? undefined : concept)}>
                       {expandedConcept?.id === concept.id ? "Collapse" : "Expand"}
                     </Button>
+
+
                   </CardContent>
                   <CardFooter className={"ml-auto"}>
                     <div className={`w-[300px] h-full bg-center bg-cover bg-no-repeat rounded-3xl`}

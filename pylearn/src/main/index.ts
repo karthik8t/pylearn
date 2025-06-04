@@ -3,10 +3,18 @@ import {app, ipcMain, protocol} from 'electron'
 import {makeAppWithSingleInstanceLock} from 'lib/electron-app/factories/app/instance'
 import {makeAppSetup} from 'lib/electron-app/factories/app/setup'
 import {MainWindow} from './windows/main'
-import {getConcepts, loadInitData, loginUser, signupUser} from "lib/services/user-service";
+import {
+  getConcepts,
+  getUserProgress,
+  loadInitData,
+  loginUser,
+  signupUser,
+  updateUserProgress
+} from "lib/services/user-service";
 import * as path from "node:path";
 import * as fs from "node:fs";
 import getMimeType from "lib/electron-app/utils/util";
+import {Progress} from "shared/types";
 
 const protocolName = "img";
 protocol.registerSchemesAsPrivileged([
@@ -45,5 +53,15 @@ ipcMain.handle('loginUser', async (_event, loginData) => {
 
 ipcMain.handle('getConcepts', async (_event, _data) => {
   const response = await getConcepts()
+  return Promise.resolve(response)
+})
+
+ipcMain.handle('getUserProgress', async (_event, _data) => {
+  const response = await getUserProgress()
+  return Promise.resolve(response)
+})
+
+ipcMain.handle('updateUserProgress', async (_event, progress: Progress[]) => {
+  const response = await updateUserProgress(progress)
   return Promise.resolve(response)
 })

@@ -1,5 +1,5 @@
-import { contextBridge, ipcRenderer } from 'electron'
-import {LoginSchema, SignupSchema, UserSchema} from 'shared/types'
+import {contextBridge, ipcRenderer} from 'electron'
+import {LoginSchema, Progress, SignupSchema, UserSchema} from 'shared/types'
 
 declare global {
   interface Window {
@@ -12,6 +12,13 @@ const API = {
 
   initData: async () => {
     return await ipcRenderer.invoke('initData')
+  },
+
+  getUserProgress: async () => {
+    return await ipcRenderer.invoke('getUserProgress')
+  },
+  updateUserProgress: async (progress: Progress[]) => {
+    await ipcRenderer.invoke('updateUserProgress', progress)
   },
 
   registerUser: (signupForm: SignupSchema) => {
