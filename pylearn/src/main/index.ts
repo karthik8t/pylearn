@@ -4,8 +4,8 @@ import {makeAppWithSingleInstanceLock} from 'lib/electron-app/factories/app/inst
 import {makeAppSetup} from 'lib/electron-app/factories/app/setup'
 import {MainWindow} from './windows/main'
 import {
-  getConcepts,
   getUserProgress,
+  loadDashboardData,
   loadInitData,
   loginUser,
   signupUser,
@@ -51,10 +51,6 @@ ipcMain.handle('loginUser', async (_event, loginData) => {
   return Promise.resolve(response)
 })
 
-ipcMain.handle('getConcepts', async (_event, _data) => {
-  const response = await getConcepts()
-  return Promise.resolve(response)
-})
 
 ipcMain.handle('getUserProgress', async (_event, _data) => {
   const response = await getUserProgress()
@@ -63,5 +59,10 @@ ipcMain.handle('getUserProgress', async (_event, _data) => {
 
 ipcMain.handle('updateUserProgress', async (_event, progress: Progress[]) => {
   const response = await updateUserProgress(progress)
+  return Promise.resolve(response)
+})
+
+ipcMain.handle('getDashboardData', async (_event, _data) => {
+  const response = await loadDashboardData()
   return Promise.resolve(response)
 })

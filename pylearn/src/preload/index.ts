@@ -14,6 +14,10 @@ const API = {
     return await ipcRenderer.invoke('initData')
   },
 
+  getDashboardData: async () => {
+    return await ipcRenderer.invoke("getDashboardData")
+  },
+
   getUserProgress: async () => {
     return await ipcRenderer.invoke('getUserProgress')
   },
@@ -26,9 +30,6 @@ const API = {
   },
   loginUser: async (loginForm: LoginSchema): Promise<UserSchema|undefined> => {
     return await ipcRenderer.invoke('loginUser', loginForm)
-  },
-  getConcepts: async () => {
-    return await ipcRenderer.invoke('getConcepts')
   },
   username: process.env.USER,
 }
