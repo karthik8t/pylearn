@@ -1,4 +1,4 @@
-import {Concept, ConceptSchema, LoginSchema, SignupSchema, UserListSchema, UserSchema} from "shared/types";
+import {Concept, ConceptSchema, LoginSchema, Progress, SignupSchema, UserListSchema, UserSchema} from "shared/types";
 
 export const signupUser = async (signupForm: SignupSchema) => {
   console.log('Starting user signup process...');
@@ -61,5 +61,35 @@ export const loadInitData = async () => {
   const adapter = new JSONFile<Concept[]>('concept_db.json');
   const db = new Low<Concept[]>(adapter, defaultData);
   await db.read()
+  return db.data;
+}
+
+export const getUserProgress = async () => {
+  console.log('Starting getUserProgress process...');
+  const defaultData: Progress[] = [];
+  const {Low} = await import('lowdb');
+  const {JSONFile} = await import('lowdb/node');
+  const adapter = new JSONFile<Progress[]>('user_progress.json');
+  const db = new Low<Progress[]>(adapter, defaultData);
+  await db.read();
+  db.data = db.data || [];
+  return db.data;
+}
+
+export const updateUserProgress = async (progress: Progress[]) => {
+  console.log('Starting updateUserProgress process...');
+  const defaultData: Progress[] = [];
+  const {Low} = await import('lowdb');
+  const {JSONFile} = await import('lowdb/node');
+  const adapter = new JSONFile<Progress[]>('user_progress.json');
+  const db = new Low<Progress[]>(adapter, defaultData);
+  await db.read();
+  db.data = db.data || [];
+
+  // Update the progress in the database
+  db.data = progress;
+
+  await db.write();
+  console.log('User progress updated:', db.data);
   return db.data;
 }
