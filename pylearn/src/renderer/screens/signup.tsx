@@ -20,7 +20,7 @@ const Signup = () => {
     });
 
     function onSubmit(data: SignupSchema) {
-        console.log(data);
+      console.debug(data);
         window.App.registerUser(data)
     }
 

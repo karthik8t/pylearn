@@ -1,9 +1,9 @@
 import {Concept, LoginSchema, Progress, SignupSchema, UserListSchema, UserSchema} from "shared/types";
 
 export const signupUser = async (signupForm: SignupSchema) => {
-  console.log('Starting user signup process...');
+  console.debug('Starting user signup process...');
   const defaultData: UserListSchema = [];
-  console.log('Default data initialized:', defaultData);
+  console.debug('Default data initialized:', defaultData);
 
   const { Low } = await import('lowdb');
   const { JSONFile } = await import('lowdb/node');
@@ -14,19 +14,19 @@ export const signupUser = async (signupForm: SignupSchema) => {
   await db.read();
   db.data = db.data || [];
 
-  console.log('Database loaded:', db.data);
+  console.debug('Database loaded:', db.data);
 
   db.data.push(signupForm);
 
   await db.write();
 
-  console.log('User signup complete. Current users:', db.data);
+  console.debug('User signup complete. Current users:', db.data);
   return db.data;
 }
 
 
 export const loginUser = async (loginForm: LoginSchema) => {
-  console.log('Starting user login process...');
+  console.debug('Starting user login process...');
   const defaultData: UserListSchema = [];
   const { Low } = await import('lowdb');
   const { JSONFile } = await import('lowdb/node');
@@ -42,7 +42,7 @@ export const loginUser = async (loginForm: LoginSchema) => {
 }
 
 export const loadInitData = async () => {
-  console.log('Starting loadInitData process...');
+  console.debug('Starting loadInitData process...');
   const defaultData: Concept[] = [];
   const { Low } = await import('lowdb');
   const { JSONFile } = await import('lowdb/node');
@@ -53,7 +53,7 @@ export const loadInitData = async () => {
 }
 
 export const getUserProgress = async () => {
-  console.log('Starting getUserProgress process...');
+  console.debug('Starting getUserProgress process...');
   const defaultData: Progress[] = [];
   const {Low} = await import('lowdb');
   const {JSONFile} = await import('lowdb/node');
@@ -65,7 +65,7 @@ export const getUserProgress = async () => {
 }
 
 export const updateUserProgress = async (progress: Progress[]) => {
-  console.log('Starting updateUserProgress process...');
+  console.debug('Starting updateUserProgress process...');
   const defaultData: Progress[] = [];
   const {Low} = await import('lowdb');
   const {JSONFile} = await import('lowdb/node');
@@ -78,7 +78,7 @@ export const updateUserProgress = async (progress: Progress[]) => {
   db.data = progress;
 
   await db.write();
-  console.log('User progress updated:', db.data);
+  console.debug('User progress updated:', db.data);
   return db.data;
 }
 
@@ -104,9 +104,9 @@ export const loadDashboardData = async () => {
 
 
   const readConceptIds = userProgress.filter(p => p.read).map(p => p.conceptId);
-  console.log('read concept ids:', readConceptIds);
+  console.debug('read concept ids:', readConceptIds);
   const readConcepts = concepts.filter(c => {
-    console.log('in filter:', c.id, readConceptIds.includes(c.id));
+    console.debug('in filter:', c.id, readConceptIds.includes(c.id));
     return readConceptIds.includes(c.id);
   });
   const unreadConcepts = concepts.filter(c => !readConceptIds.includes(c.id));
@@ -115,7 +115,7 @@ export const loadDashboardData = async () => {
     'intermediate': 0,
     'advanced': 0
   }
-  console.log('read concepts:', readConcepts);
+  console.debug('read concepts:', readConcepts);
   readConcepts.forEach(concept => {
     if (concept.difficulty in difficultyCounts) {
       difficultyCounts[concept.difficulty] += 1;
@@ -133,6 +133,6 @@ export const loadDashboardData = async () => {
     'recommendedConcept': unreadConcepts.length > 0 ? unreadConcepts[0] : undefined,
     'bookmarkedConcepts': concepts.filter(c => userProgress.find(p => p.conceptId === c.id && p.bookmarked))
   };
-  console.log('Dashboard data loaded:', response);
+  console.debug('Dashboard data loaded:', response);
   return Promise.resolve(response)
 }
