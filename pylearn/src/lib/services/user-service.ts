@@ -103,13 +103,13 @@ export const loadDashboardData = async () => {
   }
 
 
-  const totalConcepts = concepts.length;
   const readConceptIds = userProgress.filter(p => p.read).map(p => p.conceptId);
   console.log('read concept ids:', readConceptIds);
   const readConcepts = concepts.filter(c => {
     console.log('in filter:', c.id, readConceptIds.includes(c.id));
     return readConceptIds.includes(c.id);
   });
+  const unreadConcepts = concepts.filter(c => !readConceptIds.includes(c.id));
   const difficultyCounts = {
     'beginner': 0,
     'intermediate': 0,
@@ -122,20 +122,16 @@ export const loadDashboardData = async () => {
     }
   })
 
-  const conceptsMasteryArray = Object.entries(difficultyCounts).map(([difficulty, count]) => {
-    return {
-      'difficulty': difficulty,
-      'completionPercentage': Math.round((count / totalConcepts) * 100)
-    }
-  });
-
-
   const response: {
     'conceptsOverTime': { date: string, noOfConcepts: number }[],
-    'conceptsMastery': { difficulty: string, completionPercentage: number }[]
+    'conceptsMastery': { beginner: number, intermediate: number, advanced: number }
+    'recommendedConcept'?: Concept,
+    'bookmarkedConcepts': Concept[]
   } = {
     'conceptsOverTime': conceptsOverTimeArray.reverse(),
-    'conceptsMastery': conceptsMasteryArray
+    'conceptsMastery': difficultyCounts,
+    'recommendedConcept': unreadConcepts.length > 0 ? unreadConcepts[0] : undefined,
+    'bookmarkedConcepts': concepts.filter(c => userProgress.find(p => p.conceptId === c.id && p.bookmarked))
   };
   console.log('Dashboard data loaded:', response);
   return Promise.resolve(response)

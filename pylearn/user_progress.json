@@ -2,13 +2,13 @@
   {
     "conceptId": "f056cfa4-8caf-4dec-9ea4-f0f72788add5",
     "read": true,
-    "bookmarked": false,
+    "bookmarked": true,
     "read_on": "2025-06-04T19:14:44.075Z"
   },
   {
     "conceptId": "a7ed27d1-5356-4707-aee0-96a5b8cd4547",
     "read": true,
-    "bookmarked": false,
+    "bookmarked": true,
     "read_on": "2025-06-04T19:14:44.962Z"
   },
   {
@@ -20,6 +20,31 @@
     "conceptId": "8af20375-bd8d-4aa6-a448-b3b26deedbc2",
     "read": true,
     "read_on": "2025-06-04T09:14:43.144Z",
-    "bookmarked": false
+    "bookmarked": true
+  },
+  {
+    "conceptId": "a182b984-e306-4f26-b535-9a5d78c19ac5",
+    "read": false,
+    "bookmarked": true
+  },
+  {
+    "conceptId": "f8194220-0542-4dc3-b87a-c118823bf9e3",
+    "read": false,
+    "bookmarked": true
+  },
+  {
+    "conceptId": "cb836710-749e-4442-bb62-fec95f4099dd",
+    "read": false,
+    "bookmarked": true
+  },
+  {
+    "conceptId": "635d3297-10f9-4c48-8ce4-774dc34d4ee7",
+    "read": false,
+    "bookmarked": true
+  },
+  {
+    "conceptId": "04ec7834-bc72-4bca-8613-901874e2f368",
+    "read": false,
+    "bookmarked": true
   }
 ]
