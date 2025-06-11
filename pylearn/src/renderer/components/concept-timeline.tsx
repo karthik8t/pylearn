@@ -14,10 +14,6 @@ const chartConfig = {
 
 const ConceptTimeline = (props: { timeline: { date: string, noOfConcepts: number }[] }) => {
   const {timeline} = props;
-  const data = timeline.map(item => ({
-    date: item.date,
-    noOfConcepts: item.noOfConcepts + 1
-  }));
   return (
     <Card className={"col-span-8"}>
       <CardHeader>
@@ -26,7 +22,7 @@ const ConceptTimeline = (props: { timeline: { date: string, noOfConcepts: number
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={data}>
+          <BarChart accessibilityLayer data={timeline}>
             <CartesianGrid vertical={false}/>
             <XAxis
               dataKey="date"
