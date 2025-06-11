@@ -4,7 +4,6 @@ import {Concept, SubConcept} from "shared/types";
 import ScrollContainer from "renderer/components/common/scroll-container";
 import HeroBreadcrumb from "renderer/components/common/hero-breadcrumb";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "renderer/components/ui/hover-card";
-import Tags from "renderer/components/common/tags";
 import HtmlScript from "renderer/components/common/html-script";
 
 
@@ -28,7 +27,8 @@ const SubConceptPage = () => {
           <HoverCard>
             <HoverCardTrigger className={""}>
               <p className={"font-bold my-2"}>Description</p>
-              {concept.description && <p className={"heroDescription"}>{sub_concept.description}</p>}
+              {concept.description && <p
+                className={"heroDescription"}>{sub_concept.description.split("\n").map(line => <>{line}<br/></>)}</p>}
             </HoverCardTrigger>
             <HoverCardContent className={"w-[400px]"}>
               {concept.short_description && <p className={"heroShortDescription"}>{sub_concept.short_description}</p>}

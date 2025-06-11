@@ -129,7 +129,7 @@ const Concepts = () => {
                     <CardContent className={"flex flex-col gap-4"}>
                       <div>
                         <h1 className={"font-bold"}>{concept.name}</h1>
-                        <p className={"text-gray-500"}>{concept.short_description}</p>
+                        <p className={"text-gray-500 line-clamp-3"}>{concept.short_description}</p>
                       </div>
                       <div className={"mt-auto flex flex-col gap-4"}>
                         <Button
@@ -154,7 +154,7 @@ const Concepts = () => {
                     </CardContent>
                     <CardFooter className={"ml-auto"}>
                       <div className={`w-[300px] h-full bg-center bg-cover bg-no-repeat rounded-3xl`}
-                           style={{"backgroundImage": `url(app://src/resources/assets/concepts/${'default.png' ?? concept.name})`}}>
+                           style={{"backgroundImage": `url(app://src/resources/assets/concepts/${concept.name.replaceAll(' ', '_') ?? 'default'}.png)`}}>
                       </div>
                     </CardFooter>
                   </Card>
