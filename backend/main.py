@@ -25,10 +25,11 @@ def add_additional_info(concepts):
                 dumps = json.dumps(concepts)
                 file.write(dumps)
                 logger.info(f'saved new details for {concept.get("name")}')
-        if concept.get('sub_concepts') is None and concept.get('sub_concepts') == []:
+        if concept.get('sub_concepts') != []:
             for sub_concept in concept.get('sub_concepts'):
-                if sub_concept.get('description') is None:
-                    response: OllamaResponse = get_response(sub_concept.get('name'))
+                if sub_concept.get('description') == 'description not provided':
+                    logger.info(f'sub concept {sub_concept.get("name")}')
+                    response: OllamaResponse = get_response(f"{sub_concept.get('name')}({concept.get('name')})")
                     sub_concept['short_description'] = response.get('short_description')
                     sub_concept['description'] = response.get('description')
                     sub_concept['difficulty'] = response.get('difficulty')
