@@ -25,6 +25,20 @@ def add_additional_info(concepts):
                 dumps = json.dumps(concepts)
                 file.write(dumps)
                 logger.info(f'saved new details for {concept.get("name")}')
+        if concept.get('sub_concepts') is None and concept.get('sub_concepts') == []:
+            for sub_concept in concept.get('sub_concepts'):
+                if sub_concept.get('description') is None:
+                    response: OllamaResponse = get_response(sub_concept.get('name'))
+                    sub_concept['short_description'] = response.get('short_description')
+                    sub_concept['description'] = response.get('description')
+                    sub_concept['difficulty'] = response.get('difficulty')
+                    sub_concept['common_pitfalls'] = response.get('common_pitfalls', [])
+                    sub_concept['related_concepts'] = response.get('related_concepts', [])
+                    logger.info(f'saved new details for {sub_concept.get("name")}')
+                    with open(CONCEPTS_FILE, 'w') as file:
+                        dumps = json.dumps(concepts)
+                        file.write(dumps)
+                        logger.info(f'saved new details for {concept.get("name")}')
 
 
 example = """{
@@ -64,14 +78,3 @@ def start_script():
 
 if __name__ == "__main__":
     start_script()
-    # try:
-    #     concept_data: OllamaResponse = json.loads(example, strict=False)
-    #     print(concept_data)
-    #     print(f"Description: {concept_data.get('description')}")
-    #     print(f"Short Description: {concept_data.get(short_description)}")
-    #     print(f"Difficulty: {concept_data.difficulty}")
-    #     print(f"Common Pitfalls: {concept_data.common_pitfalls}")
-    #     print(f"Related Concepts: {concept_data.related_concepts}")
-    # except Exception as e:
-    #     logger.error(f"Error parsing JSON: {e}")
-    #     print(f"Error parsing JSON: {e}")
