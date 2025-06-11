@@ -121,64 +121,66 @@ const Concepts = () => {
           concepts
             .filter(c => conceptType != undefined ? c.difficulty.toLowerCase() === conceptType.toLowerCase() : true)
             .map(concept => {
-            return (
-              <div key={concept.id} id={"concept-container"}>
-                <Card key={concept.id}
-                      onDoubleClick={() => navigate("/concept", {state: concept})}
-                      className={"flex flex-row h-[250px] border-1 border-gray-200 rounded-3xl shadow-none"}>
-                  <CardContent className={"flex flex-col"}>
-                    <h1 className={"font-bold"}>{concept.name}</h1>
-                    <p className={"text-gray-500 mb-6"}>{concept.short_description}</p>
-                    <div className={"flex gap-4 mt-auto pb-4"}>
-                      {
-                        progressMap.has(concept.id) && progressMap.get(concept.id)?.read ? (
-                          <Button variant={"default"} className={"hover:bg-destructive hover:text-white"}
-                                  onClick={() => markAsUnread(concept)}>Mark as Unread</Button>
-                        ) : (
-                          <Button variant={"default"} onClick={() => markAsRead(concept)}>Mark as Read</Button>
-                        )
-                      }
-                      <Button variant={"ghost"}
-                              onClick={() => bookmarkConcept(concept)}>{progressMap.has(concept.id) && progressMap.get(concept.id)?.bookmarked ? "Remove Bookmark" : "Bookmark"}</Button>
-                    </div>
-                    <Button
-                      variant={"outline"}
-                      disabled={concept.sub_concepts.length === 0}
-                      onClick={() => setExpandedConcept(prevState => prevState?.id === concept.id ? undefined : concept)}>
-                      {expandedConcept?.id === concept.id ? "Collapse" : "Expand"}
-                    </Button>
-
-
-                  </CardContent>
-                  <CardFooter className={"ml-auto"}>
-                    <div className={`w-[300px] h-full bg-center bg-cover bg-no-repeat rounded-3xl`}
-                         style={{"backgroundImage": `url(app://src/resources/assets/concepts/${'default.png' ?? concept.name})`}}>
-                    </div>
-                  </CardFooter>
-                </Card>
-                <div>
-                  {
-                    expandedConcept && expandedConcept.id === concept.id && (
-                      <ScrollArea className="w-[900px]">
-                        <div className="flex w-max space-x-4 py-4">
-                          {concept.sub_concepts.map((sub_concept: SubConcept) => (
-                            <Card key={sub_concept.name} className={"w-[350px] h-[155px] gap-0"}>
-                              <CardHeader><ArrowUpAZ/></CardHeader>
-                              <CardContent className={"overflow-ellipsis overflow-hidden"}>
-                                <h1 className={"font-bold"}>{sub_concept.name}</h1>
-                                <p className={"text-gray-500 overflow-ellipsis"}>{sub_concept.short_description}</p>
-                              </CardContent>
-                            </Card>
-                          ))}
+              return (
+                <div key={concept.id} id={"concept-container"}>
+                  <Card key={concept.id}
+                        onDoubleClick={() => navigate("/concept", {state: concept})}
+                        className={"flex flex-row h-[250px] border-1 border-gray-200 rounded-3xl shadow-none"}>
+                    <CardContent className={"flex flex-col gap-4"}>
+                      <div>
+                        <h1 className={"font-bold"}>{concept.name}</h1>
+                        <p className={"text-gray-500"}>{concept.short_description}</p>
+                      </div>
+                      <div className={"mt-auto flex flex-col gap-4"}>
+                        <Button
+                          variant={"outline"}
+                          disabled={concept.sub_concepts.length === 0}
+                          onClick={() => setExpandedConcept(prevState => prevState?.id === concept.id ? undefined : concept)}>
+                          {expandedConcept?.id === concept.id ? "Collapse" : "Expand"}
+                        </Button>
+                        <div className={"flex gap-4"}>
+                          {
+                            progressMap.has(concept.id) && progressMap.get(concept.id)?.read ? (
+                              <Button variant={"default"} className={"hover:bg-destructive hover:text-white"}
+                                      onClick={() => markAsUnread(concept)}>Mark as Unread</Button>
+                            ) : (
+                              <Button variant={"default"} onClick={() => markAsRead(concept)}>Mark as Read</Button>
+                            )
+                          }
+                          <Button variant={"ghost"}
+                                  onClick={() => bookmarkConcept(concept)}>{progressMap.has(concept.id) && progressMap.get(concept.id)?.bookmarked ? "Remove Bookmark" : "Bookmark"}</Button>
                         </div>
-                        <ScrollBar orientation="horizontal"/>
-                      </ScrollArea>
-                    )
-                  }
+                      </div>
+                    </CardContent>
+                    <CardFooter className={"ml-auto"}>
+                      <div className={`w-[300px] h-full bg-center bg-cover bg-no-repeat rounded-3xl`}
+                           style={{"backgroundImage": `url(app://src/resources/assets/concepts/${'default.png' ?? concept.name})`}}>
+                      </div>
+                    </CardFooter>
+                  </Card>
+                  <div>
+                    {
+                      expandedConcept && expandedConcept.id === concept.id && (
+                        <ScrollArea className="w-[900px]">
+                          <div className="flex w-max space-x-4 py-4">
+                            {concept.sub_concepts.map((sub_concept: SubConcept) => (
+                              <Card key={sub_concept.name} className={"w-[350px] h-[155px] gap-0"}>
+                                <CardHeader><ArrowUpAZ/></CardHeader>
+                                <CardContent className={"overflow-ellipsis overflow-hidden"}>
+                                  <h1 className={"font-bold"}>{sub_concept.name}</h1>
+                                  <p className={"text-gray-500 overflow-ellipsis"}>{sub_concept.short_description}</p>
+                                </CardContent>
+                              </Card>
+                            ))}
+                          </div>
+                          <ScrollBar orientation="horizontal"/>
+                        </ScrollArea>
+                      )
+                    }
+                  </div>
                 </div>
-              </div>
-            )
-          })
+              )
+            })
         }
       </div>
     </ScrollContainer>
