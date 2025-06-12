@@ -52,7 +52,7 @@ const ConceptPage = () => {
                 <div key={sub_concept.name} className={"flex flex-col"}>
                   <Link to={`/sub-concept`} state={{concept: concept, sub_concept: sub_concept}}>
                     <div className={"h-[175px] bg-center bg-cover bg-no-repeat rounded-3xl"}
-                         style={{backgroundImage: `url(app://src/resources/public/concepts/${sub_concept.name.replaceAll(' ', '_')}.png)`}}>
+                         style={{backgroundImage: `url(app://renderer/concepts/${sub_concept.name.replaceAll(' ', '_')}.png)`}}>
                     </div>
                     <h3 className={"font-bold my-2"}>{sub_concept.name}</h3>
                     <p>{sub_concept.short_description}</p>

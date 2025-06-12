@@ -1,14 +1,21 @@
 import {Concept, LoginSchema, Progress, SignupSchema, UserListSchema, UserSchema} from "shared/types";
 
+import {app} from 'electron';
+import path from 'path';
+
+const userProgressFilePath = path.join(app.getPath("userData"), "user_progress.json");
+const userFilePath = path.join(app.getPath("userData"), "users.json");
+const conceptFilePath = path.join(app.getAppPath(), "renderer", "db", "concept_db.json");
+
 export const signupUser = async (signupForm: SignupSchema) => {
   console.debug('Starting user signup process...');
   const defaultData: UserListSchema = [];
   console.debug('Default data initialized:', defaultData);
 
-  const { Low } = await import('lowdb');
-  const { JSONFile } = await import('lowdb/node');
+  const {Low} = await import('lowdb');
+  const {JSONFile} = await import('lowdb/node');
 
-  const adapter = new JSONFile<UserListSchema>('src/resources/public/db/users.json');
+  const adapter = new JSONFile<UserListSchema>(userFilePath);
   const db = new Low<UserListSchema>(adapter, defaultData);
 
   await db.read();
@@ -28,9 +35,9 @@ export const signupUser = async (signupForm: SignupSchema) => {
 export const loginUser = async (loginForm: LoginSchema) => {
   console.debug('Starting user login process...');
   const defaultData: UserListSchema = [];
-  const { Low } = await import('lowdb');
-  const { JSONFile } = await import('lowdb/node');
-  const adapter = new JSONFile<UserListSchema>('src/resources/public/db/users.json');
+  const {Low} = await import('lowdb');
+  const {JSONFile} = await import('lowdb/node');
+  const adapter = new JSONFile<UserListSchema>(userFilePath);
   const db = new Low<UserListSchema>(adapter, defaultData);
 
   await db.read();
@@ -44,9 +51,9 @@ export const loginUser = async (loginForm: LoginSchema) => {
 export const loadInitData = async () => {
   console.debug('Starting loadInitData process...');
   const defaultData: Concept[] = [];
-  const { Low } = await import('lowdb');
-  const { JSONFile } = await import('lowdb/node');
-  const adapter = new JSONFile<Concept[]>('src/resources/public/db/concept_db.json');
+  const {Low} = await import('lowdb');
+  const {JSONFile} = await import('lowdb/node');
+  const adapter = new JSONFile<Concept[]>(conceptFilePath);
   const db = new Low<Concept[]>(adapter, defaultData);
   await db.read()
   return db.data;
@@ -57,7 +64,7 @@ export const getUserProgress = async () => {
   const defaultData: Progress[] = [];
   const {Low} = await import('lowdb');
   const {JSONFile} = await import('lowdb/node');
-  const adapter = new JSONFile<Progress[]>('src/resources/public/db/user_progress.json');
+  const adapter = new JSONFile<Progress[]>(userProgressFilePath);
   const db = new Low<Progress[]>(adapter, defaultData);
   await db.read();
   db.data = db.data || [];
@@ -69,7 +76,7 @@ export const updateUserProgress = async (progress: Progress[]) => {
   const defaultData: Progress[] = [];
   const {Low} = await import('lowdb');
   const {JSONFile} = await import('lowdb/node');
-  const adapter = new JSONFile<Progress[]>('src/resources/public/db/user_progress.json');
+  const adapter = new JSONFile<Progress[]>(userProgressFilePath);
   const db = new Low<Progress[]>(adapter, defaultData);
   await db.read();
   db.data = db.data || [];

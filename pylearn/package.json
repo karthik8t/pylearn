@@ -6,8 +6,8 @@
   "main": "./node_modules/.dev/main/index.js",
   "resources": "src/resources",
   "author": {
-    "name": "ola",
-    "email": "test@email.com"
+    "name": "Karthik.T",
+    "email": "thatikondakarthik13@gmail.com"
   },
   "license": "MIT",
   "packageManager": "pnpm@10.0.0",
