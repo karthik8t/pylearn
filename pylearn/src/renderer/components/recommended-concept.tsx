@@ -2,6 +2,7 @@ import React, {Fragment} from 'react'
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "renderer/components/ui/card";
 import {Concept} from "shared/types";
 import {Button} from "renderer/components/ui/button";
+import {Link} from "react-router-dom";
 
 const RecommendedConcept = (props: { concept: Concept | undefined }) => {
   const {concept} = props;
@@ -30,9 +31,11 @@ const RecommendedConcept = (props: { concept: Concept | undefined }) => {
         </div>
       </CardContent>
       <CardFooter className={"mt-auto"}>
-        <Button className={"btn btn-primary w-full"} onClick={() => console.log("Explore Concept")}>
-          Explore Concept
-        </Button>
+        <Link to={`/concepts#${concept?.id ?? ""}`} className={"w-full"}>
+          <Button className={"btn btn-primary w-full"}>
+            Explore Concept
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   )

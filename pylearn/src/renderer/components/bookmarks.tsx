@@ -3,6 +3,7 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "rendere
 import {Concept} from "shared/types";
 import {ScrollArea} from "renderer/components/ui/scroll-area";
 import {Button} from "renderer/components/ui/button";
+import {Link} from "react-router-dom";
 
 const Bookmarks = (props: { concepts: Concept[] }) => {
   const {concepts} = props;
@@ -22,7 +23,9 @@ const Bookmarks = (props: { concepts: Concept[] }) => {
                      className={"flex flex-row justify-end gap-4 items-center p-4 pl-8 bg-gray-100 rounded-lg"}>
                   <h3 className={"text-md font-semibold mr-auto"}>{concept.name}</h3>
                   <p className={"text-sm text-muted-foreground ml-2"}>{concept.difficulty}</p>
-                  <Button>View Concept</Button>
+                  <Link to={`/concepts#${concept.id}`}>
+                    <Button>View Concept</Button>
+                  </Link>
                 </div>
               ))
             ) : (

@@ -4,7 +4,7 @@ import {ScrollArea, ScrollBar} from "renderer/components/ui/scroll-area";
 import {Button} from "renderer/components/ui/button";
 import {Card, CardContent, CardFooter, CardHeader} from "renderer/components/ui/card";
 import {ArrowUpAZ} from "lucide-react";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import ScrollContainer from "renderer/components/common/scroll-container";
 import HeroBreadcrumb from "renderer/components/common/hero-breadcrumb";
 
@@ -13,11 +13,26 @@ const conceptTypes: ConceptType[] = ['Beginner', 'Intermediate', 'Advanced']
 
 const Concepts = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [concepts, setConcepts] = useState<Concept[]>([])
   const [conceptType, setConceptType] = useState<ConceptType | undefined>(undefined)
   const [expandedConcept, setExpandedConcept] = useState<Concept | undefined>(undefined)
   const [progress, setProgress] = useState<Progress[]>([])
   const [progressMap, setProgressMap] = useState<Map<string, Progress>>(new Map())
+
+  useEffect(() => {
+    const hash = location.hash?.replace("#", "");
+    if (!hash) return;
+
+    const scrollToElement = () => {
+      const el = document.getElementById(hash);
+      if (el) {
+        el.scrollIntoView({behavior: "smooth"});
+      }
+    };
+
+    setTimeout(scrollToElement, 500); // Initial attempt after 1 second
+  }, [location]);
 
   useEffect(() => {
     const invokeConceptInitChannel = async () => {
@@ -122,7 +137,7 @@ const Concepts = () => {
             .filter(c => conceptType != undefined ? c.difficulty.toLowerCase() === conceptType.toLowerCase() : true)
             .map(concept => {
               return (
-                <div key={concept.id} id={"concept-container"}>
+                <div key={concept.id} id={concept.id}>
                   <Card key={concept.id}
                         onDoubleClick={() => navigate("/concept", {state: concept})}
                         className={"flex flex-row h-[250px] border-1 border-gray-200 rounded-3xl shadow-none"}>
