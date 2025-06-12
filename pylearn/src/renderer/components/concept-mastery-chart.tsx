@@ -2,6 +2,7 @@ import React from 'react'
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,} from './ui/card'
 import {ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent} from "renderer/components/ui/chart";
 import {Label, PolarRadiusAxis, RadialBar, RadialBarChart} from "recharts";
+import {ChevronsDown, ChevronsLeftRight, ChevronsUp} from "lucide-react";
 
 
 const chartConfig = {
@@ -97,10 +98,17 @@ const ConceptMasteryChart = (props: { beginner: number, intermediate: number, ad
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 leading-none font-medium">
-          <span className="w-3 h-3 rounded-full" style={{background: "var(--chart-3)"}}/> Beginner: {beginner}
-          <span className="w-3 h-3 rounded-full" style={{background: "var(--chart-4)"}}/> Intermediate: {intermediate}
-          <span className="w-3 h-3 rounded-full" style={{background: "var(--chart-5)"}}/> Advanced: {advanced}
+        <div className="grid grid-cols-3 gap-2 leading-none font-medium justify-center items-center">
+          <p className={"mx-auto"}>Beginner:</p>
+          <p className={"mx-auto"}>Intermediate:</p>
+          <p className={"mx-auto"}>Advanced:</p>
+          <div className={"flex flex-row items-center gap-2 mx-auto"}><ChevronsDown
+            color={"var(--chart-3)"}/> {beginner}</div>
+          <div className={"flex flex-row items-center gap-2 mx-auto"}><ChevronsLeftRight
+            color={"var(--chart-4)"}/> {intermediate}</div>
+          <div className={"flex flex-row items-center gap-2 mx-auto"}><ChevronsUp color={"var(--chart-4)"}/> {advanced}
+          </div>
+
         </div>
         <div className="text-muted-foreground leading-none">
           Total concepts mastered: {beginner + intermediate + advanced}
