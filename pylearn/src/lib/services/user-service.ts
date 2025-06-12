@@ -8,7 +8,7 @@ export const signupUser = async (signupForm: SignupSchema) => {
   const { Low } = await import('lowdb');
   const { JSONFile } = await import('lowdb/node');
 
-  const adapter = new JSONFile<UserListSchema>('src/resources/assets/db/users.json');
+  const adapter = new JSONFile<UserListSchema>('src/resources/public/db/users.json');
   const db = new Low<UserListSchema>(adapter, defaultData);
 
   await db.read();
@@ -30,7 +30,7 @@ export const loginUser = async (loginForm: LoginSchema) => {
   const defaultData: UserListSchema = [];
   const { Low } = await import('lowdb');
   const { JSONFile } = await import('lowdb/node');
-  const adapter = new JSONFile<UserListSchema>('src/resources/assets/db/users.json');
+  const adapter = new JSONFile<UserListSchema>('src/resources/public/db/users.json');
   const db = new Low<UserListSchema>(adapter, defaultData);
 
   await db.read();
@@ -46,7 +46,7 @@ export const loadInitData = async () => {
   const defaultData: Concept[] = [];
   const { Low } = await import('lowdb');
   const { JSONFile } = await import('lowdb/node');
-  const adapter = new JSONFile<Concept[]>('src/resources/assets/db/concept_db.json');
+  const adapter = new JSONFile<Concept[]>('src/resources/public/db/concept_db.json');
   const db = new Low<Concept[]>(adapter, defaultData);
   await db.read()
   return db.data;
@@ -57,7 +57,7 @@ export const getUserProgress = async () => {
   const defaultData: Progress[] = [];
   const {Low} = await import('lowdb');
   const {JSONFile} = await import('lowdb/node');
-  const adapter = new JSONFile<Progress[]>('src/resources/assets/db/user_progress.json');
+  const adapter = new JSONFile<Progress[]>('src/resources/public/db/user_progress.json');
   const db = new Low<Progress[]>(adapter, defaultData);
   await db.read();
   db.data = db.data || [];
@@ -69,7 +69,7 @@ export const updateUserProgress = async (progress: Progress[]) => {
   const defaultData: Progress[] = [];
   const {Low} = await import('lowdb');
   const {JSONFile} = await import('lowdb/node');
-  const adapter = new JSONFile<Progress[]>('src/resources/assets/db/user_progress.json');
+  const adapter = new JSONFile<Progress[]>('src/resources/public/db/user_progress.json');
   const db = new Low<Progress[]>(adapter, defaultData);
   await db.read();
   db.data = db.data || [];

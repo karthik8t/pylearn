@@ -169,7 +169,7 @@ const Concepts = () => {
                     </CardContent>
                     <CardFooter className={"ml-auto"}>
                       <div className={`w-[300px] h-full bg-center bg-cover bg-no-repeat rounded-3xl`}
-                           style={{"backgroundImage": `url(app://src/resources/assets/concepts/${concept.name.replaceAll(' ', '_') ?? 'default'}.png)`}}>
+                           style={{"backgroundImage": `url(app://src/resources/public/concepts/${concept.name.replaceAll(' ', '_') ?? 'default'}.png)`}}>
                       </div>
                     </CardFooter>
                   </Card>
